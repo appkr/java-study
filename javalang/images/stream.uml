@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="467.0" y="85.0">java.util.stream.IntStream</node>
+    <node x="0.0" y="85.0">java.util.stream.LongStream</node>
+    <node x="290.0" y="85.0">java.util.stream.DoubleStream</node>
+    <node x="161.0" y="85.0">java.util.stream.Stream</node>
+    <node x="221.5" y="0.0">java.util.stream.BaseStream</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="java.util.stream.Stream" target="java.util.stream.BaseStream">
+      <point x="0.0" y="-17.5" />
+      <point x="215.5" y="65.0" />
+      <point x="274.375" y="65.0" />
+      <point x="-17.625" y="17.5" />
+    </edge>
+    <edge source="java.util.stream.LongStream" target="java.util.stream.BaseStream">
+      <point x="0.0" y="-17.5" />
+      <point x="70.5" y="55.0" />
+      <point x="239.125" y="55.0" />
+      <point x="-52.875" y="17.5" />
+    </edge>
+    <edge source="java.util.stream.DoubleStream" target="java.util.stream.BaseStream">
+      <point x="0.0" y="-17.5" />
+      <point x="368.5" y="65.0" />
+      <point x="309.625" y="65.0" />
+      <point x="17.625" y="17.5" />
+    </edge>
+    <edge source="java.util.stream.IntStream" target="java.util.stream.BaseStream">
+      <point x="0.0" y="-17.5" />
+      <point x="533.5" y="55.0" />
+      <point x="344.875" y="55.0" />
+      <point x="52.875" y="17.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="300.0" y="60.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="137.0" y="95.0">java.time.ZonedDateTime</node>
+    <node x="322.0" y="95.0">java.time.LocalDateTime</node>
+    <node x="0.0" y="95.0">java.time.Instant</node>
+    <node x="813.0" y="95.0">java.time.OffsetDateTime</node>
+    <node x="660.0" y="95.0">java.time.LocalDate</node>
+    <node x="507.0" y="95.0">java.time.LocalTime</node>
+    <node x="426.5" y="0.0">java.time.temporal.Temporal</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="java.time.ZonedDateTime" target="java.time.temporal.Temporal">
+      <point x="0.0" y="-17.5" />
+      <point x="219.5" y="65.0" />
+      <point x="457.75" y="65.0" />
+      <point x="-31.25" y="17.5" />
+    </edge>
+    <edge source="java.time.Instant" target="java.time.temporal.Temporal">
+      <point x="0.0" y="-17.5" />
+      <point x="58.5" y="55.0" />
+      <point x="436.91666666666663" y="55.0" />
+      <point x="-52.083333333333314" y="17.5" />
+    </edge>
+    <edge source="java.time.LocalTime" target="java.time.temporal.Temporal">
+      <point x="0.0" y="-17.5" />
+      <point x="573.5" y="75.0" />
+      <point x="499.41666666666663" y="75.0" />
+      <point x="10.416666666666686" y="17.5" />
+    </edge>
+    <edge source="java.time.LocalDateTime" target="java.time.temporal.Temporal">
+      <point x="0.0" y="-17.5" />
+      <point x="404.5" y="75.0" />
+      <point x="478.58333333333326" y="75.0" />
+      <point x="-10.416666666666686" y="17.5" />
+    </edge>
+    <edge source="java.time.OffsetDateTime" target="java.time.temporal.Temporal">
+      <point x="0.0" y="-17.5" />
+      <point x="899.5" y="55.0" />
+      <point x="541.0833333333334" y="55.0" />
+      <point x="52.08333333333337" y="17.5" />
+    </edge>
+    <edge source="java.time.LocalDate" target="java.time.temporal.Temporal">
+      <point x="0.0" y="-17.5" />
+      <point x="726.5" y="65.0" />
+      <point x="520.25" y="65.0" />
+      <point x="31.25" y="17.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.9542743538767395" x="493.0" y="65.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

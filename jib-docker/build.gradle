@@ -1,0 +1,81 @@
+plugins {
+    id 'org.springframework.boot' version '2.1.3.RELEASE'
+    id 'war'
+    id 'org.jetbrains.kotlin.jvm' version '1.2.71'
+    id 'org.jetbrains.kotlin.plugin.spring' version '1.2.71'
+    id 'com.google.cloud.tools.jib' version '1.0.0'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'kr.appkr'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
+    implementation 'org.jetbrains.kotlin:kotlin-reflect'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+    runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+compileKotlin {
+    kotlinOptions {
+        freeCompilerArgs = ['-Xjsr305=strict']
+        jvmTarget = '1.8'
+    }
+}
+
+compileTestKotlin {
+    kotlinOptions {
+        freeCompilerArgs = ['-Xjsr305=strict']
+        jvmTarget = '1.8'
+    }
+}
+
+jib {
+    allowInsecureRegistries = true
+    to {
+        image = "${project.name}:${project.version}"
+    }
+    container {
+        // Set JVM options.
+        jvmFlags = ['-XX:+UnlockExperimentalVMOptions', '-XX:+UseCGroupMemoryLimitForHeap', '-Dserver.port=8080']
+        // Expose different port.
+        ports = ['8080']
+        // Add labels.
+        labels = [maintainer: 'appkr']
+    }
+}
+
+/* Just Example */
+//task dockerLocalRun() {
+//    doLast {
+//        def imageName = "${project.name}:${project.version}"
+//        def containerName = "${project.name}"
+//        def dockerCmds = [
+//            "docker stop ${containerName}",
+//            "docker rm ${containerName}",
+//            "docker rmi ${imageName}",
+//            "docker run -d -p 8080:8080 --name ${containerName} ${imageName}"
+//        ]
+//        try {
+//            dockerCmds.each {
+//                println(it)
+//                exec { commandLine it.split(' ') }
+//            }
+//            println("\nDocker Build Completed!")
+//        } catch (Exception ex) {
+//            println(ex.getMessage())
+//            println("\nDocker Build Failed!")
+//        }
+//    }
+//}

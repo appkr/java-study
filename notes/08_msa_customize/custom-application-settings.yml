@@ -1,0 +1,83 @@
+# naverchannel application.yml
+cloud:
+    aws:
+        region:
+            static: ap-northeast-2
+        s3:
+            bucket: local-vroong
+        stack:
+            auto: false
+
+interceptor:
+    audit:
+        exclude-patterns: '/v2/api-docs'
+        exclude-methods: OPTIONS,GET,HEAD,CONNECT,TRACE
+
+task:
+    naver-booking:
+        backup-creator:
+            enabled: true
+            fixed-delay-millis: 10000
+        auto-cancel:
+            enabled: true
+            fixed-delay-millis: 10000
+            in-seconds: 605
+    order:
+        auto-complete:
+            enabled: false
+            cron-utc: "0 0 0 * * *" # everyday 9am KST
+
+# naverchannel application-prod.yml
+oauth2:
+    signature-verification:
+        public-key-endpoint-uri: http://uaa/oauth/token_key
+
+# naverchannel application-dev.yml
+logging:
+    logstash:
+        log-type: vroong-naverchannel-local
+
+spring:
+    cloud:
+        stream:
+            kafka:
+                binder:
+                    brokers: localhost
+                    zk-nodes: localhost
+                    headers: ["partitionKey", "eventType", "eventId", "serviceName"]
+            # kinesis:
+            #     bindings:
+            #         aclConsumerChannel:
+            #             consumer:
+            #                 idleBetweenPools: 250
+            #         productConsumerChannel:
+            #             consumer:
+            #                 idleBetweenPools: 250
+            #         orderConsumerChannel:
+            #             consumer:
+            #                 idleBetweenPools: 250
+            #     binder:
+            #         headers: ["partitionKey", "eventType", "eventId"]
+            # bindings:
+            #     aclConsumerChannel:
+            #         binder: kafka
+            #         destination: vroong-uaa-acl-event
+            #         consumer:
+            #             header-mode: embeddedHeaders
+            #             checkpointMode: record
+            #     productConsumerChannel:
+            #         binder: kafka
+            #         destination: vroong-product-event
+            #         consumer:
+            #             header-mode: embeddedHeaders
+            #             checkpointMode: record
+            #     orderConsumerChannel:
+            #         binder: kafka
+            #         destination: order-orderevent
+            #         consumer:
+            #             header-mode: embeddedHeaders
+            #             checkpointMode: record
+            default-binder: kafka
+oauth2:
+    signature-verification:
+        public-key-endpoint-uri: http://uaa/oauth/token_key

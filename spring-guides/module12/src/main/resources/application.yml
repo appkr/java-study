@@ -1,0 +1,8 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+  datasource:
+    url: jdbc:mysql://localhost:3306/kata_spring_guides?serverTimezone=Asia/Seoul
+    username: homestead
+    password: secret

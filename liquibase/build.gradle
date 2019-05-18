@@ -1,0 +1,45 @@
+plugins {
+    id 'org.springframework.boot' version '2.1.3.RELEASE'
+    id 'java'
+    id 'org.liquibase.gradle' version '2.0.1'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    runtimeOnly 'mysql:mysql-connector-java'
+    compile 'org.liquibase:liquibase-core'
+    liquibaseRuntime 'mysql:mysql-connector-java'
+    liquibaseRuntime 'org.liquibase.ext:liquibase-hibernate5:3.6'
+    liquibaseRuntime sourceSets.main.compileClasspath
+    liquibaseRuntime sourceSets.main.output
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+liquibase {
+    activities {
+        main {
+            url 'jdbc:mysql://localhost:3306/liquibasedemo?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC'
+            username 'homestead'
+            password 'secret'
+            changeLogFile 'src/main/resources/db/changelog/' + new Date().format('yyyyMMddHHmmss') + '_changelog.xml'
+            referenceUrl 'hibernate:spring:com.example.liquibasedemo.domain?dialect=org.hibernate.dialect.MySQL5InnoDBDialect&amp;hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy'
+            referenceDriver 'liquibase.ext.hibernate.database.connection.HibernateDriver'
+            defaultSchemaName 'liquibasedemo'
+            logLevel 'debug'
+            classpath 'src/main/resources/'
+        }
+    }
+
+    runList = 'main'
+}

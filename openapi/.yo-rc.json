@@ -1,0 +1,33 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "kr.appkr.openapidemo"
+    },
+    "jhipsterVersion": "5.8.1",
+    "applicationType": "monolith",
+    "baseName": "openapidemo",
+    "packageName": "kr.appkr.openapidemo",
+    "packageFolder": "kr/appkr/openapidemo",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "no",
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "gradle",
+    "enableSwaggerCodegen": true,
+    "jwtSecretKey": "MjYyMDA0OTA2NzY1OThmZDAzMDllYzcxYzk0YTYxYzllZDk2MGJjOTIyNzM4YThkNTRlY2E2MzliZjRiZjA5YWM5YjljMWIyNzQ3MzY0MzA5YmZkOTI2MzU3YjcyM2I0ZWE3YzY3NjBmNDFjMjczYjQwODM2NjFiMmU2ZGEwYzU=",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": false,
+    "clientPackageManager": "npm",
+    "skipClient": true
+  }
+}

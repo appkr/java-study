@@ -1,0 +1,63 @@
+application {
+  config {
+    applicationType microservice
+    baseName test
+    packageName dev.appkr.test
+    authenticationType uaa
+    uaaBaseName uaa
+    buildTool gradle
+    databaseType sql
+    devDatabaseType mysql
+    prodDatabaseType mysql
+    cacheProvider hazelcast
+    enableHibernateCache true
+    entitySuffix false
+    dtoSuffix DTO
+    jhiPrefix jhi
+    serviceDiscoveryType eureka
+    messageBroker kafka
+    searchEngine false
+    serverPort 8080
+    testFrameworks []
+    skipClient true
+    skipServer false
+    skipUserManagement true
+    languages [en,ko]
+  }
+
+  entities all
+}
+
+DEFAULT_MIN_LENGTH = 1
+
+enum Language {
+  FRENCH, ENGLISH, SPANISH
+}
+
+entity Member (members) {
+  name String required minlength(DEFAULT_MIN_LENGTH) maxlength(60)
+  age Long required min(18) max(100)
+  ssn String required pattern(/[0-9]{6}-[0-9]{7}/)
+  language Language
+  createdBy String
+  createdAt Instant
+  updatedBy String
+  updatedAt Instant
+}
+
+entity Dept (departments)
+
+entity Role (roles)
+
+relationship ManyToOne {
+  Member{role} to Role{users}
+}
+
+relationship ManyToMany {
+    Member{departments} to Dept{members}
+}
+
+dto all with mapstruct
+service all with serviceClass
+paginate all with pagination
+noFluentMethod all

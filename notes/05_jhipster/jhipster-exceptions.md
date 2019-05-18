@@ -1,0 +1,3 @@
+## Jhipster Exceptions
+
+![](BadRequestAlertException.png)

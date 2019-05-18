@@ -1,0 +1,23 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+group = 'module4'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+mainClassName = 'module4.Module4'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
+
+jar {
+    version =  '0.0.1'
+    // REQUIRED!! TO MAKE EXECUTABLE JAR
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+}

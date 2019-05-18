@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'idea'
+}
+
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'idea'
+
+sourceCompatibility=1.8
+targetCompatibility=1.8
+
+idea {
+    module {
+        excludeDirs += files('node_modules')
+    }
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+
+}

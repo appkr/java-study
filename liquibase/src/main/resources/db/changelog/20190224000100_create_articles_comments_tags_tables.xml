@@ -1,0 +1,71 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+  <changeSet author="appkr (generated)" id="1551017959203-1">
+    <createTable tableName="articles">
+      <column autoIncrement="true" name="id" type="BIGINT">
+        <constraints primaryKey="true" primaryKeyName="articlesPK"/>
+      </column>
+      <column name="title" type="VARCHAR(255)"/>
+      <column name="content" type="TEXT"/>
+      <column name="created_at" type="timestamp"/>
+      <column name="updated_at" type="timestamp"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet author="appkr (generated)" id="1551017959203-2">
+    <createTable tableName="comments">
+      <column autoIncrement="true" name="id" type="BIGINT">
+        <constraints primaryKey="true" primaryKeyName="commentsPK"/>
+      </column>
+      <column name="article_id" type="BIGINT"/>
+      <column name="content" type="TEXT"/>
+      <column name="created_at" type="timestamp"/>
+      <column name="updated_at" type="timestamp"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet author="appkr (generated)" id="1551017959203-3">
+    <createTable tableName="tags">
+      <column autoIncrement="true" name="id" type="BIGINT">
+        <constraints primaryKey="true" primaryKeyName="tagsPK"/>
+      </column>
+      <column name="name" type="VARCHAR(255)"/>
+      <column name="created_at" type="timestamp"/>
+      <column name="updated_at" type="timestamp"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet author="appkr (generated)" id="1551017959203-4">
+    <createTable tableName="article_tag">
+      <column name="article_id" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="tag_id" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+
+  <changeSet author="appkr (generated)" id="1551017959203-5">
+    <addForeignKeyConstraint baseColumnNames="article_id" baseTableName="comments"
+                             constraintName="FKk4ib6syde10dalk7r7xdl0m5p" deferrable="false" initiallyDeferred="false"
+                             referencedColumnNames="id" referencedTableName="articles" validate="true"/>
+  </changeSet>
+
+  <changeSet author="appkr (generated)" id="1551017959203-6">
+    <addForeignKeyConstraint baseColumnNames="tag_id" baseTableName="article_tag"
+                             constraintName="FK3nvn435qf5rn1e9ph51e3r55h" deferrable="false" initiallyDeferred="false"
+                             referencedColumnNames="id" referencedTableName="tags" validate="true"/>
+  </changeSet>
+
+  <changeSet author="appkr (generated)" id="1551017959203-7">
+    <addForeignKeyConstraint baseColumnNames="article_id" baseTableName="article_tag"
+                             constraintName="FKkfkj25ialwd9il3fajd6vkmv5" deferrable="false" initiallyDeferred="false"
+                             referencedColumnNames="id" referencedTableName="articles" validate="true"/>
+  </changeSet>
+
+</databaseChangeLog>

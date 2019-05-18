@@ -1,0 +1,59 @@
+version: '2'
+services:
+  zookeeper:
+    extends:
+      file: kafka.yml
+      service: zookeeper
+    ports:
+      - 2181:2181
+
+  kafka:
+    extends:
+      file: kafka.yml
+      service: kafka
+    environment:
+      - KAFKA_ADVERTISED_HOST_NAME=kafka
+      - KAFKA_ADVERTISED_PORT=9092
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_CREATE_TOPICS=topic-jhipster:1:1
+    ports:
+      - 9092:9092
+
+  jhipster-registry:
+    extends:
+      file: jhipster-registry.yml
+      service: jhipster-registry
+    environment:
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - SPRING_PROFILES_ACTIVE=dev,swagger,uaa
+      - SPRING_SECURITY_USER_PASSWORD=admin
+      - JHIPSTER_REGISTRY_PASSWORD=admin
+      - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_TYPE=native
+      - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_LOCATIONS=file:./central-config/docker-config/
+    volumes:
+      - ./central-server-config:/central-config
+    ports:
+      - 8761:8761
+
+  mysql:
+    image: mysql:5.7.20
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+    volumes:
+      - $HOME/vroongmsa/mysql_data:/var/lib/mysql
+    ports:
+      - 3306:3306
+    command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
+
+  vroong-uaa:
+    build:
+      context: $HOME/meshkorea/vroong-uaa
+      dockerfile: src/main/docker/Dockerfile
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev,swagger
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:admin@jhipster-registry:8761/eureka
+      - SPRING_CLOUD_CONFIG_URI=http://admin:admin@jhipster-registry:8761/config
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/uaa?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false
+      - JHIPSTER_SLEEP=30 # gives time for the JHipster Registry to boot before the application
+    ports:
+      - 9999:9999

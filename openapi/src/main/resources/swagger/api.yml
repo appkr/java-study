@@ -1,0 +1,121 @@
+openapi: 3.0.1
+info:
+  title: open-api-demo
+  description: Query Param As Object Demo
+  version: 0.0.1
+servers:
+  - url: '{scheme}://{host}:{port}/{version}'
+    variables:
+      scheme:
+        default: http
+      host:
+        default: localhost
+      port:
+        default: '8080'
+      version:
+        enum:
+          - v1
+        default: v1
+paths:
+  /pets:
+    get:
+      summary: List Pets
+      operationId: listPets
+      tags:
+        - pet
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListPetsResponse'
+      parameters:
+        - name: query
+          in: query
+          style: form
+          explode: true
+          schema:
+            $ref: '#/components/schemas/ListPetsRequest'
+components:
+  schemas:
+    AgeRange:
+      type: object
+      properties:
+        from:
+          type: integer
+          format: int64
+        to:
+          type: integer
+          format: int64
+    ListPetsRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        ageRange:
+          $ref: '#/components/schemas/AgeRange'
+        page:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int64
+    ListPetsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Pet'
+        page:
+          $ref: '#/components/schemas/Pagination'
+    Pet:
+      properties:
+        id:
+          title: Pet Code
+          type: integer
+          format: int64
+        name:
+          title: Pet Name
+          type: string
+        age:
+          title: Pet Age
+          type: integer
+          format: int64
+        parents:
+          title: Parent
+          type: array
+          items:
+            $ref: '#/components/schemas/Pet'
+        hasOwner:
+          title: Owned by a person
+          description: |
+            + true: Owned
+            + false: Orphan
+          type: boolean
+    Pagination:
+      properties:
+        total:
+          type: integer
+          format: int64
+        count:
+          type: integer
+          format: int64
+        per_page:
+          type: integer
+          format: int64
+        current_page:
+          type: integer
+          format: int64
+        total_pages:
+          type: integer
+          format: int64
+        links:
+          $ref: '#/components/schemas/Link'
+    Link:
+      properties:
+        previous:
+          type: string
+        next:
+          type: string

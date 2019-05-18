@@ -1,0 +1,34 @@
+/*
+ * Plugin that provides API-first development using OpenAPI-generator to
+ * generate Spring-MVC endpoint stubs at compile time from an OpenAPI definition file
+ */
+apply plugin: 'org.openapi.generator'
+
+openApiGenerate {
+    generatorName = "spring"
+    inputSpec = "$rootDir/src/main/resources/swagger/api.yml".toString()
+    outputDir = "$buildDir/openapi".toString()
+    apiPackage = "kr.appkr.openapidemo.api"
+    modelPackage = "kr.appkr.openapidemo.api.model"
+    apiFilesConstrainedTo = [""]
+    modelFilesConstrainedTo = [""]
+    supportingFilesConstrainedTo = ["ApiUtil.java"]
+    validateSpec = true
+    configOptions = [
+        useTags: "true",
+        delegatePattern: "true",
+        dateLibrary: "java8",
+        java8: "true",
+        hideGenerationTimestamp: "true"
+    ]
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir file("${project.buildDir.path}/openapi/src/main/java")
+        }
+    }
+}
+
+compileJava.dependsOn("openApiGenerate")
