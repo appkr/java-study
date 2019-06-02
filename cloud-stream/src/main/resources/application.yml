@@ -1,0 +1,27 @@
+spring:
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination: log_stream_in
+          binder: local_rabbit
+        output:
+          destination: log_stream_out
+          binder: local_rabbit
+
+      binders:
+        local_rabbit:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: localhost
+                port: 5672
+                virtual-host: /
+                username: guest
+                password: guest
+
+logging:
+  level:
+    ROOT: INFO
+    springstudy.cloudstream: DEBUG
