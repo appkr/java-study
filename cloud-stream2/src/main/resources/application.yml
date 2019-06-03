@@ -1,0 +1,65 @@
+originator: MessageProducer
+server:
+  port: 64398
+management:
+  port: 8082
+  context-path: /manage
+
+spring:
+  cloud:
+    stream:
+      bindings:
+        ordersIn:
+          destination: order_stream
+          content-type: application/json
+          binder: local_rabbit
+        ordersOut:
+          destination: order_stream
+          content-type: application/json
+          binder: local_rabbit
+
+      binders:
+        local_rabbit:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: localhost
+                port: 5672
+                virtual-host: /
+                username: guest
+                password: guest
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:h2:file:./build/h2db/db/order;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE
+    username: order
+    password:
+    hikari:
+      pool-name: order-service-cp
+      minimum-idle: 2
+      maximum-pool-size: 2
+      connection-timeout: 5000
+      connection-test-query: SELECT 1
+  h2:
+    console:
+      enabled: false
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    database: H2
+    show-sql: true
+    properties:
+      hibernate:
+        id:
+          new_generator_mappings: true
+        cache:
+          use_second_level_cache: false
+          use_query_cache: false
+        generate_statistics: true
+        globally_quoted_identifiers: true
+        batch_fetch_style: dynamic
+        default_batch_fetch_size: 100
+
+logging:
+  level:
+    ROOT: INFO
+    springstudy.cloudstream2: DEBUG
