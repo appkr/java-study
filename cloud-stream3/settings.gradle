@@ -1,0 +1,4 @@
+include 'sink',
+        'source'
+
+rootProject.name = 'cloud-stream3'
