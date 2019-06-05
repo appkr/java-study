@@ -12,8 +12,14 @@ public class CustomerRegistrationEventListener {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Async
-    @EventListener
-    public void handle(CustomerRegistrationEvent event) {
-        logger.info("REGISTRATION EVENT GOT RECEIVED FOR CUSTOMER : {}", event.getName());
+    @EventListener(condition = "#event.customerType == T(springstudy.events2.event.CustomerRegistrationEvent.CustomerType).B2B")
+    public void handleB2B(CustomerRegistrationEvent event) {
+        logger.info("REGISTRATION EVENT GOT RECEIVED FOR B2B CUSTOMER : {}", event);
+    }
+
+    @Async
+    @EventListener(condition = "#event.customerType.name() == 'B2C'")
+    public void handleB2C(CustomerRegistrationEvent event) {
+        logger.info("REGISTRATION EVENT GOT RECEIVED FOR B2c CUSTOMER : {}", event);
     }
 }

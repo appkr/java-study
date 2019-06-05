@@ -14,6 +14,9 @@ public class EventSender implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        publisher.publishEvent(new CustomerRegistrationEvent("Foo"));
+        CustomerRegistrationEvent eventB2B = new CustomerRegistrationEvent("Foo", CustomerRegistrationEvent.CustomerType.B2B);
+        CustomerRegistrationEvent eventB2C = new CustomerRegistrationEvent("Foo", CustomerRegistrationEvent.CustomerType.B2C);
+        publisher.publishEvent(eventB2B);
+        publisher.publishEvent(eventB2C);
     }
 }
