@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import springstudy.events2.autoinvoke.InitMethodExampleBean;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"springstudy.events2.event"})
+@ComponentScan(basePackages = {"springstudy.events2.event", "springstudy.events2.config"})
 public class Events2Application {
 
     public static void main(String[] args) {
