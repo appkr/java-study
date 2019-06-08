@@ -8,3 +8,5 @@ spring:
           search-locations: file://${user.home}/workspace/spring-study/spring-cloud/config-server/central-properties
   profiles:
     active: native
+  application:
+    name: ConfigServer
