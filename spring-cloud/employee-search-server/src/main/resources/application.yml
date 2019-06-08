@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: EmployeeSearch
+  cloud:
+    config:
+      uri: http://localhost:8888
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka
+server:
+  port: 8080
+security:
+  basic:
+    enabled: false
+management:
+  security:
+    enabled: false
