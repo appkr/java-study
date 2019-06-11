@@ -7,10 +7,27 @@ repositories {
     jcenter()
 }
 
+ext {
+    slf4jVersion = '1.7.5'
+    logbackVersion = '1.0.13'
+    lombokVersion = '1.18.8'
+}
+
+List loggers = [
+    "org.slf4j:slf4j-api:${slf4jVersion}",
+//    "org.slf4j:jcl-over-slf4j:${slf4jVersion}",
+    "org.slf4j:log4j-over-slf4j:${slf4jVersion}",
+//    "org.slf4j:jul-to-slf4j:${slf4jVersion}",
+    "ch.qos.logback:logback-core:${logbackVersion}",
+    "ch.qos.logback:logback-classic:${logbackVersion}"
+]
+
 dependencies {
     implementation 'com.google.guava:guava:27.0.1-jre'
-
     testImplementation 'junit:junit:4.12'
+    testCompile loggers
+    testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 }
 
 mainClassName = 'springstudy.thread.App'

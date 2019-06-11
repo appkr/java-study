@@ -4,7 +4,7 @@ application {
     baseName test
     packageName dev.appkr.test
     authenticationType uaa
-    uaaBaseName uaa
+    uaaBaseName "uaa"
     buildTool gradle
     databaseType sql
     devDatabaseType mysql
