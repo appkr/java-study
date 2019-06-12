@@ -17,3 +17,9 @@ docker run \
     -p 8000:15672 \
     rabbitmq:3-management
 ```
+
+```bash
+$ open http://localhost:8000
+# guest / guest
+
+```
