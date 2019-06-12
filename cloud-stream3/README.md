@@ -1,7 +1,8 @@
 ## Spring Cloud Stream
 
 - https://github.com/JacobASeverson/stream-example-kinesis
-
+- Producer/Publisher: `Source`, outputs `Message` via `MessageChannel` 
+- Consumer/Subscriber: `Sink`, listen input from `SubscribeChannel`
 ![](doc/SpringCloudStream.png)
 
 #### Run
