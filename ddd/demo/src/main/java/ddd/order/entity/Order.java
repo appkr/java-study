@@ -13,13 +13,13 @@ public class Order {
     @GeneratedValue
     private Long id;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<LineItem> lineItems = new ArrayList<>();
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderPayment> payments = new ArrayList<>();
 
-    @OneToOne(mappedBy = "order")
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
     private ShippingAddress shippingAddress;
 
     private LocalDateTime createdAt;
@@ -49,7 +49,13 @@ public class Order {
     }
 
     public void setShippingAddress(ShippingAddress shippingAddress) {
+        // Validation logic here
         this.shippingAddress = shippingAddress;
+    }
+
+    public void changeShippingAddress(ShippingAddress shippingAddress) {
+        // Validation logic here
+        setShippingAddress(shippingAddress);
     }
 
     public void placeOrder() {
