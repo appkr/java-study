@@ -1,6 +1,7 @@
 ## DDD Demo
 
 - [애그리게잇 하나에 리파지토리 하나](https://www.popit.kr/에그리게잇-하나에-리파지토리-하나/)
+- [ID로 다른 애그리게잇을 참조하라](https://www.popit.kr/id로-다른-애그리게잇을-참조하라/)
 
 ```bash
 # OrderTest.canPlaceAnOrder()

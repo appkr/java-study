@@ -13,6 +13,8 @@ public class Order {
     @GeneratedValue
     private Long id;
 
+    private Long customerId;
+
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<LineItem> lineItems = new ArrayList<>();
 
@@ -30,6 +32,10 @@ public class Order {
     }
 
     public Order() {
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     public void addLineItem(LineItem lineItem) {
