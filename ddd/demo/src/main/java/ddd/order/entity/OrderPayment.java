@@ -39,4 +39,12 @@ public class OrderPayment {
 
     public OrderPayment() {
     }
+
+    public boolean isCreditCard() {
+        return this.method.equals(PaymentMethod.CREDIT_CARD);
+    }
+
+    public boolean isMobilePhone() {
+        return this.method.equals(PaymentMethod.MOBILE_PHONE);
+    }
 }

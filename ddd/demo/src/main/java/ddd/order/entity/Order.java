@@ -36,12 +36,51 @@ public class Order {
         this.lineItems.add(lineItem);
     }
 
+    public List<LineItem> getLineItems() {
+        return lineItems;
+    }
+
     public void addOrderPayment(OrderPayment payment) {
         this.payments.add(payment);
     }
 
+    public List<OrderPayment> getPayments() {
+        return payments;
+    }
+
     public void setShippingAddress(ShippingAddress shippingAddress) {
         this.shippingAddress = shippingAddress;
+    }
+
+    public void placeOrder() {
+        this.validate();
+        // Other validation policy
+    }
+
+    private void validate() {
+        this.validatePaymentMethodPolicyOfLineItems();
+    }
+
+    private void validatePaymentMethodPolicyOfLineItems() {
+        boolean contains = this.getLineItems()
+            .stream()
+            .anyMatch(
+                lineItem -> lineItem
+                    .getProductId()
+                    .equalsIgnoreCase("P-0004")
+            );
+
+        if (contains) {
+            if (this.getPayments().size() != 1 ||
+                this.getPayments()
+                    .stream()
+                    .anyMatch(
+                        orderPayment -> !orderPayment.isCreditCard()
+                    )
+            ) {
+                throw new IllegalArgumentException("P-0004 상품은 신용카드로만 결제가 가능합니다");
+            }
+        }
     }
 
     @Override

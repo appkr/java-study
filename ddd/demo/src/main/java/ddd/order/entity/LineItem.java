@@ -32,6 +32,10 @@ public class LineItem {
     public LineItem() {
     }
 
+    public String getProductId() {
+        return productId;
+    }
+
     @Override
     public String toString() {
         return "LineItem{" +
