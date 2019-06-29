@@ -1,4 +1,4 @@
-package kata;
+package kata.mutability;
 
 import com.google.common.base.MoreObjects;
 import java.util.*;

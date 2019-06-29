@@ -1,5 +1,6 @@
-package kata;
+package kata.mutability;
 
+import kata.mutability.Person;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

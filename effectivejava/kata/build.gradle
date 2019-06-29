@@ -26,6 +26,12 @@ dependencies {
     // This dependency is found on compile classpath of this component and consumers.
     implementation 'com.google.guava:guava:27.0.1-jre'
 
+    // https://mvnrepository.com/artifact/org.hibernate/hibernate-core
+    compile 'org.hibernate:hibernate-core:5.4.3.Final'
+
+    // https://mvnrepository.com/artifact/com.h2database/h2
+    compile 'com.h2database:h2:1.4.199'
+
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
 }

@@ -1,4 +1,4 @@
-package kata;
+package kata.mutability;
 
 public class PhoneNumberBuilder {
     private int areaCode;

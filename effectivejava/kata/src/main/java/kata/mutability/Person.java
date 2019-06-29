@@ -1,4 +1,4 @@
-package kata;
+package kata.mutability;
 
 import static com.google.common.base.Preconditions.checkState;
 

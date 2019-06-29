@@ -1,5 +1,6 @@
-package kata;
+package kata.mutability;
 
+import kata.mutability.PhoneNumber;
 import org.junit.Test;
 
 import java.util.ArrayList;
