@@ -1,4 +1,4 @@
-package springstudy.thread;
+package springstudy.thread.baeldung;
 
 import com.google.common.util.concurrent.*;
 import lombok.extern.slf4j.Slf4j;

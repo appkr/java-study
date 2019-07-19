@@ -1,4 +1,4 @@
-package springstudy.thread;
+package springstudy.thread.baeldung;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
