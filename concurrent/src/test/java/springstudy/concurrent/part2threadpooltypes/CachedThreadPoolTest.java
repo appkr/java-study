@@ -1,8 +1,7 @@
-package springstudy.thread.defog.part2threadpooltypes;
+package springstudy.concurrent.part2threadpooltypes;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
-import springstudy.thread.defog.part1executorservice.FixedThreadPoolTest;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

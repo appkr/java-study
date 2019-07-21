@@ -1,4 +1,4 @@
-package springstudy.thread.defog.part1executorservice;
+package springstudy.concurrent.part1executorservice;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;

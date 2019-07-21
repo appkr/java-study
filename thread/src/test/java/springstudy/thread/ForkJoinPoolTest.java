@@ -1,4 +1,4 @@
-package springstudy.thread.baeldung;
+package springstudy.thread;
 
 import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
@@ -28,11 +28,11 @@ public class ForkJoinPoolTest {
 
         assertEquals(20, sum);
 
-        // 16:17:44.719 [ForkJoinPool.commonPool-worker-1] INFO  springstudy.thread.baeldung.ForkJoinPoolTest - Handling task at ForkJoinPool.commonPool-worker-1
-        // 16:17:44.723 [ForkJoinPool.commonPool-worker-1] INFO  springstudy.thread.baeldung.ForkJoinPoolTest - Handling task at ForkJoinPool.commonPool-worker-1
-        // 16:17:44.723 [ForkJoinPool.commonPool-worker-1] INFO  springstudy.thread.baeldung.ForkJoinPoolTest - Handling task at ForkJoinPool.commonPool-worker-1
-        // 16:17:44.723 [ForkJoinPool.commonPool-worker-1] INFO  springstudy.thread.baeldung.ForkJoinPoolTest - Handling task at ForkJoinPool.commonPool-worker-1
-        // 16:17:44.724 [main] INFO  springstudy.thread.baeldung.ForkJoinPoolTest - Task delegated
+        // 16:17:44.719 [ForkJoinPool.commonPool-worker-1] INFO  springstudy.thread.ForkJoinPoolTest - Handling task at ForkJoinPool.commonPool-worker-1
+        // 16:17:44.723 [ForkJoinPool.commonPool-worker-1] INFO  springstudy.thread.ForkJoinPoolTest - Handling task at ForkJoinPool.commonPool-worker-1
+        // 16:17:44.723 [ForkJoinPool.commonPool-worker-1] INFO  springstudy.thread.ForkJoinPoolTest - Handling task at ForkJoinPool.commonPool-worker-1
+        // 16:17:44.723 [ForkJoinPool.commonPool-worker-1] INFO  springstudy.thread.ForkJoinPoolTest - Handling task at ForkJoinPool.commonPool-worker-1
+        // 16:17:44.724 [main] INFO  springstudy.thread.ForkJoinPoolTest - Task delegated
     }
 
     static class TreeNode {

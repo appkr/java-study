@@ -1,4 +1,4 @@
-package springstudy.thread.defog.part2threadpooltypes;
+package springstudy.concurrent.part1executorservice;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -7,12 +7,15 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Slf4j
-public class SingleThreadExecutorTest {
+public class FixedThreadPoolTest {
 
     @Test
-    public void test() {
-        ExecutorService es = Executors.newSingleThreadExecutor();
-        for (int i = 0; i < 10; i++) {
+    public void testFixedThreadPool() {
+        int coreCount = Runtime.getRuntime().availableProcessors();
+        log.info("This machine has {} cpus", coreCount);
+
+        ExecutorService es = Executors.newFixedThreadPool(coreCount);
+        for (int i = 0; i < 100; i++) {
             es.execute(new Task());
         }
         log.info("Main thread done!");
