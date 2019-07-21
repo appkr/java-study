@@ -35,3 +35,21 @@ public ThreadPoolExecutor(int corePoolSize,
 - [defog4] [Java ExecutorService - Part 4 - Callable / Future](https://www.youtube.com/watch?v=NEZ2ASoP_nY)
 
 - [defog5] [Introduction to CompletableFuture in Java 8](https://www.youtube.com/watch?v=ImtZgX1nmr8)
+    - Execution order may be changed by compiler (for optimization purpose)
+    - Field visibility: `volatile` keyword
+> 컴파일러가 최적화를 위해 코드의 실행 순서를 변경하더라도 `volatile`, `synchronized`, `lock` 등을 써서 일관성을 보장해야 한다
+```
++-----------+-----------+-----------+-----------+
+| core 1    | core 2    | core 3    | core 4    |
++-----------+-----------+-----------+-----------+
+| registres | registers | registres | registers |
++-----------+-----------+-----------+-----------+
+| L1 cache  | L1 cache  | L1 cache  | L1 cache  |
++-----------+-----------+-----------+-----------+
+| L2 cache              | L2 cache              |
++-----------+-----------+-----------+-----------+
+| L3 cache                                      |
++-----------+-----------+-----------+-----------+
+| RAM                                           |
++-----------+-----------+-----------+-----------+
+```
