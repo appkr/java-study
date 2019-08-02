@@ -9,7 +9,7 @@ repositories {
 
 dependencies {
     implementation("com.google.guava:guava:27.0.1-jre")
-    compile("com.vividsolutions:jts:1.13")
+    compile("org.locationtech.jts:jts-core:1.16.1")
     testImplementation("junit:junit:4.12")
 }
 

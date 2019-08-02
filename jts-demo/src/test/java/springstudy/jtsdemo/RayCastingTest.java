@@ -1,7 +1,7 @@
 package springstudy.jtsdemo;
 
-import com.vividsolutions.jts.geom.Coordinate;
 import org.junit.Test;
+import org.locationtech.jts.geom.Coordinate;
 
 import java.util.ArrayList;
 
