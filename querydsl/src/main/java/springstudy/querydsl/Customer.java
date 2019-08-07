@@ -1,8 +1,11 @@
 package springstudy.querydsl;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Table(name = "customers")
 public class Customer {
 
     @Id
@@ -14,6 +17,9 @@ public class Customer {
 
     @Column(name = "last_name", length = 60)
     private String lastName;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Order> orders = new ArrayList<>();
 
     public Customer() { }
 
@@ -48,6 +54,15 @@ public class Customer {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        orders.forEach(e -> e.setCustomer(this));
+        this.orders = orders;
     }
 
     @Override
