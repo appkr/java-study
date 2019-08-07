@@ -69,3 +69,32 @@ public class CustomerRepositoryImpl implements CustomerRepositoryCustom {
     }
 }
 ```
+
+#### BooleanBuilder
+
+```
++----------------------------------+
+| <<I>> Expression                 |
++----------------------------------+
+| + accept(Visitor<R,C>, C): R     |
++----------------------------------+
+                  ↑
++----------------------------------+
+| <<I>> Predicate                  |
++----------------------------------+
+| + not(): Predicate               |
++----------------------------------+
+                  ↑
++----------------------------------+
+| <<I>> BooleanBuilder             |
++----------------------------------+
+| + @Override accept()             |
+| + @Override not()                |
+| + and(Predicate): self           |
+| + andAnyOf(...Predicate): self   |
+| + andNot(Predicate): self        |
+| + or(Predicate): self            |
+| + orAllOf(...Predicate): self    |
+| + orNot(Predicate): self         |
++----------------------------------+
+```
