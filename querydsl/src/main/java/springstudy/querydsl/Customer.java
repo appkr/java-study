@@ -3,6 +3,8 @@ package springstudy.querydsl;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 @Entity
 @Table(name = "customers")
@@ -17,6 +19,10 @@ public class Customer {
 
     @Column(name = "last_name", length = 60)
     private String lastName;
+
+    @Column(name = "tags", columnDefinition = "text")
+    @Convert(converter = TagConverter.class)
+    private SortedSet<String> tags = new TreeSet<>();
 
     @OneToMany(mappedBy = "customer")
     private List<Order> orders = new ArrayList<>();
@@ -56,6 +62,21 @@ public class Customer {
         this.lastName = lastName;
     }
 
+    public SortedSet<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tagList) {
+        TreeSet<String> newTags = new TreeSet<>();
+        if (tagList != null) {
+            tagList.sort(String::compareToIgnoreCase);
+            newTags.addAll(tagList);
+        }
+
+        this.tags = newTags;
+    }
+
+
     public List<Order> getOrders() {
         return orders;
     }
@@ -71,6 +92,7 @@ public class Customer {
             "id=" + id +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
+            ", tags=" + tags +
             '}';
     }
 }

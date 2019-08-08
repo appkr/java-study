@@ -30,6 +30,7 @@ sourceSets {
 ext {
     querydslVersion = '4.2.1'
     hibernateJpaApiVersion = '1.0.2.Final'
+    jacksonVersion = '2.9.8'
 }
 
 dependencies {
@@ -43,6 +44,12 @@ dependencies {
     compileOnly "com.querydsl:querydsl-apt:${querydslVersion}"
     annotationProcessor "com.querydsl:querydsl-apt:${querydslVersion}:jpa"
     annotationProcessor "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:${hibernateJpaApiVersion}"
+
+    // Jackson
+    implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+
+    // ApacheCommons
+    implementation "org.apache.commons:commons-lang3:3.9"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

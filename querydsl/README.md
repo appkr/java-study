@@ -2,6 +2,8 @@
 
 - http://www.querydsl.com/
 - http://www.querydsl.com/static/querydsl/4.0.1/reference/ko-KR/html_single/
+- [Spring Boot JPA Step-13 - Query Dsl이용한 페이징 API 만들기](https://www.popit.kr/spring-boot-jpa-step-13-query-dsl이용한-페이징-api-만들기/)
+- https://kwonnam.pe.kr/wiki/java/querydsl
 
 #### Setup
 ```groovy
