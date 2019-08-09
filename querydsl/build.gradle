@@ -39,8 +39,8 @@ dependencies {
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
     // QueryDsl
-    compile "com.querydsl:querydsl-jpa:${querydslVersion}"
-    compile "com.querydsl:querydsl-core:${querydslVersion}"
+    implementation "com.querydsl:querydsl-jpa:${querydslVersion}"
+    implementation "com.querydsl:querydsl-core:${querydslVersion}"
     compileOnly "com.querydsl:querydsl-apt:${querydslVersion}"
     annotationProcessor "com.querydsl:querydsl-apt:${querydslVersion}:jpa"
     annotationProcessor "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:${hibernateJpaApiVersion}"
