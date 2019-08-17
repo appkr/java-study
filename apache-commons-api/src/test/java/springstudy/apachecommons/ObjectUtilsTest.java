@@ -36,8 +36,4 @@ public class ObjectUtilsTest {
     private void p(Object o) {
         System.out.println(o);
     }
-
-    private void pa(Object[] o) {
-        System.out.println(ArrayUtils.toString(o));
-    }
 }
