@@ -1,6 +1,8 @@
 package springstudy.apachecommons;
 
-public class Name implements Cloneable {
+import java.io.Serializable;
+
+public class Name implements Cloneable, Serializable {
 
     private String firstName;
     private String lastName;
