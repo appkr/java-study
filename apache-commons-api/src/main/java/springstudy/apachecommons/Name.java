@@ -1,6 +1,7 @@
 package springstudy.apachecommons;
 
-public class Name {
+public class Name implements Cloneable {
+
     private String firstName;
     private String lastName;
 
@@ -34,5 +35,10 @@ public class Name {
             "firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
             '}';
+    }
+
+    @Override
+    public Name clone() throws CloneNotSupportedException {
+        return new Name(firstName, lastName);
     }
 }
