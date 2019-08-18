@@ -1,1 +1,17 @@
+#logging:
+#    level:
+#        ROOT: INFO
+#        org.hibernate.SQL: DEBUG
+#        org.hibernate.type.descriptor.sql: DEBUG
 
+spring:
+    datasource:
+        driver-class-name: org.h2.Driver
+        url: jdbc:h2:mem:restquery;DB_CLOSE_DELAY=-1
+        username: sa
+        password:
+    jpa:
+        show-sql: true
+    output:
+        ansi:
+            enabled: always
