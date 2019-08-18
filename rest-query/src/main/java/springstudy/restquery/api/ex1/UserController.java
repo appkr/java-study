@@ -1,4 +1,4 @@
-package springstudy.restquery.api;
+package springstudy.restquery.api.ex1;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@RestController
+@RestController("controllerEx1")
 public class UserController {
 
     private static final Pattern pattern = Pattern.compile("(\\w+)(:|<|>)(\\w+),");
