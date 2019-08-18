@@ -1,6 +1,7 @@
 ## 김충섭(subicura)님 강의
 
-https://github.com/subicura/workshop-k8s-basic
+- https://www.youtube.com/playlist?list=PL9mhQYIlKEhdTu31zyb_QelQMaqFGgASA
+- https://github.com/subicura/workshop-k8s-basic
 
 [토크ON세미나] 쿠버네티스 살펴보기 1강 - 컨테이너 오케스트레이션 | T아카데미
 [https://www.youtube.com/watch?v=WxzWXqTNdlw](https://www.youtube.com/watch?v=WxzWXqTNdlw)
