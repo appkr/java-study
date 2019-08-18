@@ -12,11 +12,27 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    querydslVersion = '4.2.1'
+    hibernateJpaApiVersion = '1.0.2.Final'
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-logging'
     runtimeOnly 'com.h2database:h2'
+
+    // QueryDsl
+    implementation "com.querydsl:querydsl-jpa:${querydslVersion}"
+    implementation "com.querydsl:querydsl-core:${querydslVersion}"
+    compileOnly "com.querydsl:querydsl-apt:${querydslVersion}"
+    annotationProcessor "com.querydsl:querydsl-apt:${querydslVersion}:jpa"
+    annotationProcessor "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:${hibernateJpaApiVersion}"
+
+    // Apache commons
+    compile 'org.apache.commons:commons-lang3:3.9'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
