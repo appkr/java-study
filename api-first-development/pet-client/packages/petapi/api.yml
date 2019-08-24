@@ -1,0 +1,261 @@
+openapi: '3.0.1'
+info:
+    title: 'pet service'
+    version: 1.0.0
+
+servers:
+    - url: http://localhost:8080
+
+paths:
+    /api/pets:
+        post:
+            summary: createPet
+            operationId: createPet
+            tags:
+                - Pet
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Pet'
+            responses:
+                '201':
+                    $ref: '#/components/responses/Created'
+                '400':
+                    $ref: '#/components/responses/BadRequest'
+                '409':
+                    $ref: '#/components/responses/ConflictResponse'
+
+        get:
+            summary: listPets
+            operationId: listPets
+            tags:
+                - Pet
+            parameters:
+                -   $ref: '#/components/parameters/PageParam'
+                -   $ref: '#/components/parameters/SizeParam'
+                -   $ref: '#/components/parameters/PetTypeParam'
+                -   $ref: '#/components/parameters/NameParam'
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ListPetResponse'
+                '400':
+                    $ref: '#/components/responses/BadRequest'
+
+    /api/pets/{petId}:
+        parameters:
+            - $ref: '#/components/parameters/PetIdParam'
+
+        get:
+            summary: getPet
+            operationId: getPet
+            tags:
+                - Pet
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Pet'
+                '400':
+                    $ref: '#/components/responses/BadRequest'
+                '404':
+                    $ref: '#/components/responses/NotFound'
+
+components:
+    schemas:
+        #----------------------------------------
+        # API model properties
+        #----------------------------------------
+
+        PetId:
+            type: integer
+            format: int64
+            readOnly: true
+            example: 1
+
+        #----------------------------------------
+        # API model - Top level
+        #----------------------------------------
+
+        PetType:
+            type: string
+            enum:
+                - CAT
+                - MICE
+
+        Pet:
+            type: object
+            required:
+                - name
+            properties:
+                petId:
+                    $ref: '#/components/schemas/PetId'
+                petType:
+                    $ref: '#/components/schemas/PetType'
+                name:
+                    type: string
+                    example: Tom
+                createdAt:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                    example: "2018-12-01T10:00:00Z"
+                updatedAt:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                    example: "2018-12-01T10:00:00Z"
+
+        #----------------------------------------
+        # Common Model
+        #----------------------------------------
+
+        ApiError:
+            type: object
+            properties:
+                type:
+                    type: string
+                    format: uri
+                    example: petsvc/constraint-violation
+                title:
+                    type: string
+                    example: Resource not found
+                detail:
+                    type: string
+                    nullable: true
+
+        Page:
+            type: object
+            properties:
+                size:
+                    type: integer
+                    format: int32
+                    default: 20
+                    example: 20
+                totalElements:
+                    type: integer
+                    format: int64
+                    example: 100
+                totalPages:
+                    type: integer
+                    format: int32
+                    example: 5
+                number:
+                    type: integer
+                    format: int32
+                    default: 1
+                    example: 1
+
+        #----------------------------------------
+        # Response model
+        #----------------------------------------
+
+        ListPetResponse:
+            type: object
+            properties:
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Pet'
+                page:
+                    $ref: '#/components/schemas/Page'
+
+    parameters:
+        PetIdParam:
+            in: path
+            name: petId
+            schema:
+                $ref:
+                    '#/components/schemas/PetId'
+            required: true
+
+        PageParam:
+            in: query
+            name: page
+            schema:
+                type: integer
+                format: int32
+                default: 1
+                minimum: 1
+            required: false
+
+        SizeParam:
+            in: query
+            name: size
+            schema:
+                type: integer
+                format: int32
+                default: 20
+                minimum: 1
+            required: false
+
+        PetTypeParam:
+            in: query
+            name: petType
+            schema:
+                type: string
+            example: CAT
+            required: false
+
+        NameParam:
+            in: query
+            name: name
+            schema:
+                type: string
+                minLength: 2
+            example: Jerry
+            required: false
+
+    headers: {}
+
+    requestBodies: {}
+    # OpenApi Generator Bugs not generating api models in requestBodies with $ref defined in components.schemas
+    # @see https://github.com/OpenAPITools/openapi-generator/issues/1112
+
+    responses:
+        #----------------------------------------
+        # Common Response
+        #----------------------------------------
+
+        Created:
+            description: Created
+            headers:
+                Location:
+                    schema:
+                        type: string
+                        example: /api/pets/{regionId}
+
+        NoContent:
+            description: No Content
+
+        BadRequest:
+            description: Bad Request
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/ApiError'
+
+        NotFound:
+            description: Not Found
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/ApiError'
+
+        ConflictResponse:
+            description: Conflict
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/ApiError'
+
+    examples: {}
+
+security:
+    - PetJwt: []

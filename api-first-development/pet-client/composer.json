@@ -1,0 +1,26 @@
+{
+    "repositories": [
+        {
+            "type": "path",
+            "url": "./packages/petapi/php",
+            "options": {"symlink": true}
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "example/petapi": "201908250012"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\": "test/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.3"
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "variableNamingConvention": "camelCase",
+    "packagePath": ".",
+    "invokerPackage": "Example\\PetApi",
+    "modelPackage": "Model",
+    "apiPackage": "Service",
+    "srcBasePath": "src",
+    "gitUserId": "example",
+    "gitRepoId": "petapi",
+    "composerVendorName": "example",
+    "composerProjectName": "petapi"
+}

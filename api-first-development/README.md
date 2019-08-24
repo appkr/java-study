@@ -86,3 +86,60 @@ sourceSets {
 
 compileJava.dependsOn("openApiGenerate")
 ```
+
+---
+
+#### PHP client example
+```bash
+mkdir -p pet-client/src pet-client/test pet-client/packages/petapi
+cp api.yml pet-client/packages/petapi/
+echo "{}" > pet-client/composer.json
+echo "{}" > pet-client/packages/petapi/config-php.json
+```
+```json
+// composer.json
+{
+    "repositories": [
+        {
+            "type": "path",
+            "url": "./packages/petapi/php",
+            "options": {"symlink": true}
+        }
+    ],
+    "require": {
+        "php": ">=7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\": "test/"
+        }
+    }
+}
+```
+```php
+// config-php.json
+{
+    "variableNamingConvention": "camelCase",
+    "packagePath": ".",
+    "invokerPackage": "Example\\PetApi",
+    "modelPackage": "Model",
+    "apiPackage": "Service",
+    "srcBasePath": "src",
+    "gitUserId": "example",
+    "gitRepoId": "petapi",
+    "composerVendorName": "example",
+    "composerProjectName": "petapi"
+}
+```
+```bash
+cd pet-client/packages/petapi
+openapi-generator generate -g php -i api.yml -o php -c config-php.json
+cd ../..
+composer require example/petapi -vvv
+composer require phpunit/phpunit --dev -vvv
+```
