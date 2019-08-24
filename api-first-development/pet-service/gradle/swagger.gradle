@@ -1,0 +1,31 @@
+apply plugin: 'org.openapi.generator'
+
+openApiGenerate {
+    generatorName = "spring"
+    inputSpec = "$rootDir/src/main/resources/swagger/api.yml".toString()
+    outputDir = "$buildDir/openapi".toString()
+    apiPackage = "com.example.petservice.api"
+    modelPackage = "com.example.petservice.api.model"
+    modelNameSuffix = "Dto"
+    apiFilesConstrainedTo = [""]
+    modelFilesConstrainedTo = [""]
+    supportingFilesConstrainedTo = ["ApiUtil.java"]
+    validateSpec = true
+    configOptions = [
+            useTags: "true",
+            delegatePattern: "true",
+            dateLibrary: "java8",
+            java8: "true",
+            hideGenerationTimestamp: "true"
+    ]
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir file("${project.buildDir.path}/openapi/src/main/java")
+        }
+    }
+}
+
+compileJava.dependsOn("openApiGenerate")
