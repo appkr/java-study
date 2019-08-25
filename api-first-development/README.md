@@ -1,14 +1,5 @@
 ## API first development
 
-#### Install tools
-```bash
-brew install openapi-generator
-openapi-generator version
-openapi-generator help
-openapi-generator list
-openapi-generator help generate
-```
-
 #### Write API spec
 
 - [Swagger Editor](https://swagger.io/tools/swagger-editor/)
@@ -19,6 +10,21 @@ Or convert from Postman collection
 - [APIMATIC transformer](https://www.apimatic.io/transformer)
 
 OAS spec can be imported back to Postman collection
+
+To make beautiful html documentation:
+```bash
+npm install redoc -g
+npx redoc-cli bundle api.yml
+```
+
+#### Install Code Generator
+```bash
+brew install openapi-generator
+openapi-generator version
+openapi-generator help
+openapi-generator list
+openapi-generator help generate
+```
 
 #### Generate Server and Client library
 ```bash
