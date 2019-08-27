@@ -1,5 +1,8 @@
 [장진영](https://www.facebook.com/profile.php?id=1401720840)님의 MSA 강의
 
+- [슬라이드](https://www.slideshare.net/pongsor/event-storming-based-msa-training-commerce-example)
+[복제본](eventstormingbasedmsatrainingcommerceexample-190827001038.pdf)
+
 - 신입사원을 위한 MSA 강의 - 오버뷰
 [https://www.facebook.com/groups/cloudswmoding/permalink/2618877444823498/](https://www.facebook.com/groups/cloudswmoding/permalink/2618877444823498/)
 
