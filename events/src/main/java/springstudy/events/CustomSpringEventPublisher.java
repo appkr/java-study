@@ -13,7 +13,9 @@ public class CustomSpringEventPublisher {
     }
 
     public void doStuffAndPublishAnEvent(final String message) {
-        System.out.println("Publishing custom event. ");
+        System.out.println("---");
+        System.out.println("Publishing custom event: ");
+        System.out.println("---");
         CustomSpringEvent event = new CustomSpringEvent(this, message);
         publisher.publishEvent(event);
     }
