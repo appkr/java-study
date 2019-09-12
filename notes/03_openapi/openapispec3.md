@@ -4,6 +4,7 @@
 - https://swagger.io/docs/specification/about/
 - https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.1.md
 - Case Sensitive
+https://blog.readme.io/an-example-filled-guide-to-swagger-3-2/
 
 #### Tools
 - https://openapi-map.apihandyman.io/
@@ -91,7 +92,7 @@ password | `string` | `password` | A hint to UIs to obscure input.
     - `securitySchemes`: Map<string, SecurityScheme|Reference>[]
     - `links`: Map<string, Link|Reference>[]
     - `callbacks`: Map<string, Callback|Reference>[]
-- `paths`: Path[] REQUIRED 
+- `paths`: Path[] REQUIRED
     - `/{path}`: Path
         - `$ref`: string
         - `summary`: string
@@ -118,7 +119,7 @@ password | `string` | `password` | A hint to UIs to obscure input.
         - `trace`: Operation
         - `servers`: Server[]
         - `parameters`: Parameter[]|Reference[]
-- `security`: Security[] 
+- `security`: Security[]
     - `type`: string(apiKey|http|oauth2|openIdConnect) REQUIRED
     - `description`: string
     - `name`: string REQUIRED when type: "apiKey"
