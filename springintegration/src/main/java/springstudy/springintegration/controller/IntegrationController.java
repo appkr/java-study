@@ -1,22 +1,50 @@
 /**
- * 1. curl -s -X GET http://localhost:8080/integrate/Foo
- *      invokes a `@RestController`, `IntegrateController#getMessageFromIntegrationService()`
- * 2. Upon receiving the HTTP call, the controller sends the value obtained from `@PathVariable("name")`
- *      to the `IntegrationGateway`
- * 3. `@ServiceActivator` having a same inputChannel name as the `IntegrationGateway` will be invoked
- *      In this example `IntegrationService#anotherMessage()` is the one
- * 4. The `@ServiceActivator` returns back a message to the replyChannel
- * 5. The `@RestController` returns back the message to the HTTP client
- *      Which is "Welcome Foo to Spring Integration"
+ *
+ * ```bash
+ * $ curl -s -X GET http://localhost:8080/integrate/Foo
+ * Welcome Foo to Spring Integration
+ * ```
+ *
+ * Controller
+ *      -> Gateway `IntegrationGateway.sendMessage()`
+ *          -> Channel "integration.gateway.channel"
+ *      -> ServiceActivator `IntegrationService.anotherMessage()`
+ *          -> `replyChannel.send()`
+ *      -> API response
+ *
+ * ---
+ *
+ * ```bash
+ * $ curl -s -X POST http://localhost:8080/integrate -H "Content-type: application/json" -d '{"id": 1, "name": "Foo", "school": "Seoul JH"}'
+ * Student{id='1', name='Foo', school='Seoul JH'}
+ * ```
+ *
+ * Controller
+ *      -> Gateway `IntegrationGateway.processStudentDetails()`
+ *          -> Channel "integration.student.gateway.channel"
+ *      -> Transformer `ObjectToJsonTransformer`
+ *          -> Channel "integration.student.objectToJson.channel"
+ *      -> ServiceActivator `StudentService.receiveMessage()`
+ *          -> Channel "integration.student.jsonToObject.channel"
+ *      -> Transformer `JsonToObjectTransformer`
+ *          -> Channel "integration.student.jsonToObject.fromTransformer.channel"
+ *      -> ServiceActivator `StudentService.processJsonToObject()`
+ *          -> `replyChannel.send()`
+ *      -> API Response
+ *
+ * Console output:
+ * ---
+ * GenericMessage [payload={"id":"1","name":"Foo","school":"Seoul JH"}, headers={replyChannel=org.springframework.messaging.core.GenericMessagingTemplate$TemporaryReplyChannel@6cc798f4, errorChannel=org.springframework.messaging.core.GenericMessagingTemplate$TemporaryReplyChannel@6cc798f4, id=1b27918f-bf79-364a-c35c-3f4d00ad8299, json__TypeId__=class springstudy.springintegration.model.Student, contentType=application/json, timestamp=1569156628005}]
+ * ---
+ * Object to Json: {"id":"1","name":"Foo","school":"Seoul JH"}
+ * ---
+ * Json to Object: Student{id='1', name='Foo', school='Seoul JH'}
  */
-
 package springstudy.springintegration.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import springstudy.springintegration.messaging.IntegrationGateway;
+import springstudy.springintegration.model.Student;
 
 @RestController
 @RequestMapping("/integrate")
@@ -31,5 +59,10 @@ public class IntegrationController {
     @GetMapping("/{name}")
     public String getMessageFromIntegrationService(@PathVariable("name") String name) {
         return integrationGateway.sendMessage(name);
+    }
+
+    @PostMapping
+    public String processStudentDetails(@RequestBody Student student) {
+        return integrationGateway.processStudentDetails(student);
     }
 }

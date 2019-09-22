@@ -32,4 +32,5 @@ public String myService(String payload) {}
 - https://www.enterpriseintegrationpatterns.com/patterns/messaging/
 - https://www.baeldung.com/spring-integration
 - https://www.youtube.com/watch?v=icIosLjHu3I&list=PLr2Nvl0YJxI5-QasO8XY5m8Fy34kG-YF2
-- https://www.youtube.com/watch?v=lla5jtKIn10&list=PLO0KWyajXMh6HbVTnf7YqwbEeZU6kuKJa
+- https://www.youtube.com/watch?v=lla5jtKIn10&list=PLO0KWyajXMh6HbVTnf7YqwbEeZU6kuKJa 
+    -> For documentation @see `springstudy.springintegration.controller.IntegrationController`
