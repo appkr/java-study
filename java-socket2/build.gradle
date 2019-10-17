@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+repositories {
+    jcenter()
+}
+
+group = 'app'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+mainClassName = 'app.App'
+
+dependencies {
+
+}
+
+jar {
+    version =  '0.0.1'
+    manifest {
+        attributes 'Main-Class': 'app.App'
+    }
+}
