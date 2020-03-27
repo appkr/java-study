@@ -32,6 +32,9 @@ $ vim ~/.kube/config
 ```
 
 #### k8s 콘솔 접속
+
+> kubectl cheatsheet https://kubernetes.io/ko/docs/reference/kubectl/cheatsheet/
+
 ```bash
 # k8s 터널링
 # http://localhost:8002/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/overview?namespace=default
