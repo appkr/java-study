@@ -1,4 +1,6 @@
 import java.util.UUID;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 
 public class UuidApp {
 
@@ -19,6 +21,9 @@ public class UuidApp {
         Integer.valueOf(0x10); // 16
         Integer.valueOf(010); // 8
         Integer.valueOf(0b11); // 3
+
+        // 64bit random hex
+        BigInteger(1, SecureRandom.getSeed(8)).toString(16);
     }
 }
 

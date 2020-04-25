@@ -1,3 +1,6 @@
+[장진영] 클라우드 네이티브 강의
+[https://www.facebook.com/groups/cloudswmoding/permalink/3181735125204391/](https://www.facebook.com/groups/cloudswmoding/permalink/3181735125204391/)
+
 [장진영](https://www.facebook.com/profile.php?id=1401720840)님의 MSA 강의
 
 - [슬라이드](https://www.slideshare.net/pongsor/event-storming-based-msa-training-commerce-example)
