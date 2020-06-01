@@ -1,11 +1,16 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+    http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd ">
 
-  <changeSet author="appkr (generated)" id="1551017959203-1">
-    <createTable tableName="articles">
+  <changeSet author="appkr" id="chageset-1">
+    <comment>Create articles table</comment>
+    <createTable tableName="articles" remarks="아티클 테이블">
       <column autoIncrement="true" name="id" type="BIGINT">
         <constraints primaryKey="true" primaryKeyName="articlesPK"/>
       </column>
@@ -14,10 +19,14 @@
       <column name="created_at" type="timestamp"/>
       <column name="updated_at" type="timestamp"/>
     </createTable>
+    <rollback>
+      <dropTable tableName="articles"/>
+    </rollback>
   </changeSet>
 
-  <changeSet author="appkr (generated)" id="1551017959203-2">
-    <createTable tableName="comments">
+  <changeSet author="appkr" id="chageset-2">
+    <comment>Create comments table</comment>
+    <createTable tableName="comments" remarks="댓글 테이블">
       <column autoIncrement="true" name="id" type="BIGINT">
         <constraints primaryKey="true" primaryKeyName="commentsPK"/>
       </column>
@@ -26,10 +35,14 @@
       <column name="created_at" type="timestamp"/>
       <column name="updated_at" type="timestamp"/>
     </createTable>
+    <rollback>
+      <dropTable tableName="comments"/>
+    </rollback>
   </changeSet>
 
-  <changeSet author="appkr (generated)" id="1551017959203-3">
-    <createTable tableName="tags">
+  <changeSet author="appkr" id="chageset-3">
+    <comment>Create tags table</comment>
+    <createTable tableName="tags" remarks="태그 테이블">
       <column autoIncrement="true" name="id" type="BIGINT">
         <constraints primaryKey="true" primaryKeyName="tagsPK"/>
       </column>
@@ -37,10 +50,14 @@
       <column name="created_at" type="timestamp"/>
       <column name="updated_at" type="timestamp"/>
     </createTable>
+    <rollback>
+      <dropTable tableName="tags"/>
+    </rollback>
   </changeSet>
 
-  <changeSet author="appkr (generated)" id="1551017959203-4">
-    <createTable tableName="article_tag">
+  <changeSet author="appkr" id="chageset-4">
+    <comment>Create article_tag table</comment>
+    <createTable tableName="article_tag" remarks="아티클-태그 맵핑 테이블">
       <column name="article_id" type="BIGINT">
         <constraints nullable="false"/>
       </column>
@@ -48,24 +65,36 @@
         <constraints nullable="false"/>
       </column>
     </createTable>
+    <rollback>
+      <dropTable tableName="article_tag"/>
+    </rollback>
   </changeSet>
 
-  <changeSet author="appkr (generated)" id="1551017959203-5">
+  <changeSet author="appkr" id="chageset-5">
     <addForeignKeyConstraint baseColumnNames="article_id" baseTableName="comments"
                              constraintName="FKk4ib6syde10dalk7r7xdl0m5p" deferrable="false" initiallyDeferred="false"
                              referencedColumnNames="id" referencedTableName="articles" validate="true"/>
+    <rollback>
+      <dropForeignKeyConstraint baseTableName="comments" constraintName="FKk4ib6syde10dalk7r7xdl0m5p"/>
+    </rollback>
   </changeSet>
 
-  <changeSet author="appkr (generated)" id="1551017959203-6">
+  <changeSet author="appkr" id="chageset-6">
     <addForeignKeyConstraint baseColumnNames="tag_id" baseTableName="article_tag"
                              constraintName="FK3nvn435qf5rn1e9ph51e3r55h" deferrable="false" initiallyDeferred="false"
                              referencedColumnNames="id" referencedTableName="tags" validate="true"/>
+    <rollback>
+      <dropForeignKeyConstraint baseTableName="article_tag" constraintName="FK3nvn435qf5rn1e9ph51e3r55h"/>
+    </rollback>
   </changeSet>
 
-  <changeSet author="appkr (generated)" id="1551017959203-7">
+  <changeSet author="appkr" id="chageset-7">
     <addForeignKeyConstraint baseColumnNames="article_id" baseTableName="article_tag"
                              constraintName="FKkfkj25ialwd9il3fajd6vkmv5" deferrable="false" initiallyDeferred="false"
                              referencedColumnNames="id" referencedTableName="articles" validate="true"/>
+    <rollback>
+      <dropForeignKeyConstraint baseTableName="article_tag" constraintName="FKkfkj25ialwd9il3fajd6vkmv5"/>
+    </rollback>
   </changeSet>
 
 </databaseChangeLog>

@@ -1,0 +1,72 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+    http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd ">
+
+  <changeSet author="appkr" id="changeset-8" context="local,test">
+    <insert tableName="tags">
+      <column name="name" value="Foo"/>
+      <column name="created_at" valueDate="2019-01-01 00:00:00"/>
+      <column name="updated_at" valueDate="2019-01-01 00:00:00"/>
+    </insert>
+    <insert tableName="tags">
+      <column name="name" value="Bar"/>
+      <column name="created_at" valueDate="2019-01-01 00:00:00"/>
+      <column name="updated_at" valueDate="2019-01-01 00:00:00"/>
+    </insert>
+    <!--liquibase.exception.RollbackFailedException: liquibase.exception.RollbackImpossibleException: No inverse to liquibase.change.core.InsertDataChange created-->
+    <!--rollback>
+      <delete tableName="tags">
+        <where>name="Foo" OR name = "Bar"</where>
+      </delete>
+    </rollback-->
+  </changeSet>
+
+  <changeSet author="appkr" id="changeset-9" context="local,test">
+    <insert tableName="articles">
+      <column name="title" value="Test Article"/>
+      <column name="content" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tempor felis at dignissim efficitur. Morbi convallis tortor urna, sed egestas lectus sollicitudin eu."/>
+      <column name="created_at" valueDate="2019-01-01 00:00:00"/>
+      <column name="updated_at" valueDate="2019-01-01 00:00:00"/>
+    </insert>
+    <!--rollback>
+      <delete tableName="articles">
+        <where>title="Test Article"</where>
+      </delete>
+    </rollback-->
+  </changeSet>
+
+  <changeSet author="appkr" id="changeset-10" context="local,test">
+    <insert tableName="comments">
+      <column name="article_id" valueNumeric="1"/>
+      <column name="content" value="Praesent ultricies mi id arcu porta, in congue felis auctor. Nunc aliquam placerat sem eget vestibulum. Vestibulum luctus dolor ac efficitur rhoncus."/>
+      <column name="created_at" valueDate="2019-01-01 00:00:00"/>
+      <column name="updated_at" valueDate="2019-01-01 00:00:00"/>
+    </insert>
+    <!--rollback>
+      <sql dbms="mysql">
+        SET FOREIGN_KEY_CHECKS = 0;
+        TRUNCATE TABLE comments;
+        SET FOREIGN_KEY_CHECKS = 1;
+      </sql>
+      <sql dbms="h2">
+        SET REFERENTIAL_INTEGRITY FALSE;;
+        TRUNCATE TABLE comments;
+        SET REFERENTIAL_INTEGRITY TRUE;;
+      </sql>
+    </rollback-->
+  </changeSet>
+
+  <changeSet author="appkr" id="changeset-11" context="local,test">
+    <insert tableName="article_tag">
+      <column name="article_id" valueNumeric="1"/>
+      <column name="tag_id" valueNumeric="1"/>
+    </insert>
+  </changeSet>
+
+</databaseChangeLog>
