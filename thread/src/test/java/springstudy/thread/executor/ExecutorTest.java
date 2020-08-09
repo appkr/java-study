@@ -1,4 +1,4 @@
-package springstudy.thread;
+package springstudy.thread.executor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.*;
@@ -18,14 +18,12 @@ public class ExecutorTest {
     public void 메인과_다른_스레드에서_작업을_실행한다() {
         String t1 = Thread.currentThread().getName();
         log.info("t1 스레드 이름: {}", t1);
-        assertEquals("main", t1);
 
         Executor e = Executors.newSingleThreadExecutor();
 
         e.execute(() -> {
             String t2 = Thread.currentThread().getName();
             log.info("t2 스레드 이름: {}", t2);
-            assertNotEquals("main", t2);
         });
     }
 

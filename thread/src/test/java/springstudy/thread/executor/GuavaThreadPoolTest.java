@@ -1,4 +1,4 @@
-package springstudy.thread;
+package springstudy.thread.executor;
 
 import com.google.common.util.concurrent.*;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +36,7 @@ public class GuavaThreadPoolTest {
     @Test
     public void exitingExecutorServiceShutdownTheThreadsWhenMainShutdown() {
         ThreadPoolExecutor e = (ThreadPoolExecutor) Executors.newFixedThreadPool(5);
-        ExecutorService es = MoreExecutors.getExitingExecutorService(e, 100, TimeUnit.MILLISECONDS);
+        ExecutorService es = MoreExecutors.getExitingExecutorService(e, 3, TimeUnit.SECONDS);
 
         es.submit(() -> {
             log.info("Start handling task");
