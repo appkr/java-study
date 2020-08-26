@@ -1,0 +1,30 @@
+jib {
+    from {
+        image = 'openjdk:8-jre-alpine'
+    }
+
+    to {
+        image = "${project.name}"
+        tags = ['latest']
+    }
+
+    containerizingMode = 'packaged'
+
+    container {
+        jvmFlags = [
+                '-Duser.timezone=Asia/Seoul',
+                '-Dfile.encoding=UTF8'
+        ]
+        ports = ['8083']
+        creationTime = 'USE_CURRENT_TIMESTAMP'
+    }
+}
+
+task down(type:Exec) {
+    commandLine 'docker-compose', '-f', 'docker/docker-compose.yml', 'down'
+}
+
+task up(type:Exec) {
+    dependsOn down
+    commandLine 'docker-compose', '-f', 'docker/docker-compose.yml', 'up'
+}

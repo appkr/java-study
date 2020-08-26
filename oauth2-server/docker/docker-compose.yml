@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+
+  mysql:
+    image: mysql:5.7.30
+    container_name: mysql
+    volumes:
+      - ../mysql_data:/var/lib/mysql/
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_ROOT_PASSWORD=secret
+    ports:
+      - 3306:3306
+    command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
+    healthcheck:
+      test: ["CMD", "mysql -uroot", "-psecret", "-e", "SELECT 1"]
