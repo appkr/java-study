@@ -15,30 +15,28 @@ sourceCompatibility = '1.8'
 
 repositories {
 	mavenCentral()
+    maven { url "https://jitpack.io" }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'com.github.thomasdarimont.embedded-spring-boot-keycloak-server:embedded-keycloak-server-spring-boot-parent:2.3.0'
+    }
 }
 
 dependencies {
     implementation platform('org.springframework.cloud:spring-cloud-dependencies:Hoxton.SR7')
 
-    implementation 'org.apache.commons:commons-lang3:3.10'
-
-    // web
-    implementation('org.springframework.boot:spring-boot-starter-web') {
-        exclude module: 'spring-boot-starter-tomcat'
-    }
-    implementation 'org.springframework.boot:spring-boot-starter-undertow'
-    implementation('org.springframework.boot:spring-boot-starter-actuator') {
-        exclude module: 'micrometer-core'
+    annotationProcessor('org.springframework.boot:spring-boot-configuration-processor') {
+        exclude group: 'com.vaadin.external.google', module: 'android-json'
     }
 
-    // persistennce
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    // Keycloak
+    // @see https://github.com/thomasdarimont/embedded-spring-boot-keycloak-server
+    implementation 'com.github.thomasdarimont.embedded-spring-boot-keycloak-server:embedded-keycloak-server-plain:2.3.0'
+
+    // Persistence
     implementation 'mysql:mysql-connector-java'
-
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
-    testImplementation 'com.h2database:h2'
 }
 
 test {

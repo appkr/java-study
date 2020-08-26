@@ -1,2 +1,3 @@
-create database if not exists `auth` default character set = utf8mb4 default collate = utf8mb4_general_ci;
+-- NOTE keycloak does not support utf8mb4
+create database if not exists `auth` default character set = utf8 default collate = utf8_general_ci;
 flush privileges;
