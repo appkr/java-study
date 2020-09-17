@@ -16,4 +16,11 @@ public class ExpensiveObject implements AutoCloseable {
   public void close() throws Exception {
     this.cost = -1;
   }
+
+  @Override
+  public String toString() {
+    return "ExpensiveObject{" +
+        "cost=" + cost +
+        '}';
+  }
 }
