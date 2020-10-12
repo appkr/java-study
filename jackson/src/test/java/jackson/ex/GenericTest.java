@@ -11,6 +11,7 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 public class GenericTest {
+
     private ObjectMapper om = new ObjectMapper();
 
     @Test

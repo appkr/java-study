@@ -9,6 +9,7 @@ import java.io.IOException;
 import static org.junit.Assert.*;
 
 public class MyValueTest {
+
     private ObjectMapper om = new ObjectMapper();
 
     @Test
@@ -24,7 +25,7 @@ public class MyValueTest {
     }
 
     @Test
-    public void shouldSerializeJsonStringFromMyValueObject() {
+    public void shouldSerializeToJsonStringFromMyValueObject() {
         MyValue myValue = new MyValue("Bob", 13);
         String json = null;
 
