@@ -1,0 +1,14 @@
+spring:
+    datasource:
+        driver-class-name: org.h2.Driver
+        url: jdbc:h2:file:./build/spring-data-example;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MULTI_THREADED=FALSE
+        username: sa
+        password:
+
+    jpa:
+        database: H2
+        open-in-view: false
+        show-sql: true
+        properties:
+            hibernate.show_sql: true
+            hibernate.format_sql: true
