@@ -1,4 +1,4 @@
-package springstudy.datacommons;
+package dev.appkr.springdata.converter;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
