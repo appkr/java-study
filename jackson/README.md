@@ -1,8 +1,12 @@
 ## Jackson Example
 
-- [https://github.com/FasterXML/jackson-databind/](https://github.com/FasterXML/jackson-databind/)
+- @see https://github.com/FasterXML/jackson-databind/
 
 ![](idea-screenshot.png)
+
+## Jackson Json View
+
+- @see https://www.baeldung.com./jackson-json-view-annotation
 
 ## Jackson Serialization Filtering
 
