@@ -1,4 +1,4 @@
-package dev.appkr.jacksonfiltering;
+package dev.appkr.jackson.filtering;
 
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;

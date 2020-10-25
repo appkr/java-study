@@ -1,4 +1,4 @@
-package dev.appkr.jacksonfiltering;
+package dev.appkr.jackson;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

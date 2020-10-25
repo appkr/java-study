@@ -1,4 +1,4 @@
-package dev.appkr.jacksonfiltering;
+package dev.appkr.jackson;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

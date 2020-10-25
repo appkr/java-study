@@ -1,4 +1,4 @@
-package jackson.ex;
+package dev.appkr.jackson.basic;
 
 public class MyValue {
 

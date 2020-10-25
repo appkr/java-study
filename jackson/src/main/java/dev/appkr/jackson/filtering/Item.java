@@ -1,4 +1,4 @@
-package dev.appkr.jacksonfiltering;
+package dev.appkr.jackson.filtering;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
