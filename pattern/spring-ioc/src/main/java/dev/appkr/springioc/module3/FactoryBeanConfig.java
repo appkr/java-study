@@ -36,4 +36,20 @@ public class FactoryBeanConfig {
 
     return person;
   }
+
+  @Bean(name = "manager")
+  public EmployeeFactory managerFactory() {
+    EmployeeFactory factory = new EmployeeFactory();
+    factory.setDesignation("Manager");
+
+    return factory;
+  }
+
+  @Bean(name = "director")
+  public EmployeeFactory directorFactory() {
+    EmployeeFactory factory = new EmployeeFactory();
+    factory.setDesignation("Director");
+
+    return factory;
+  }
 }
