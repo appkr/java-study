@@ -14,7 +14,8 @@ Tiger getTiger(String name) {
 Tiger tiger = context.getBean(Tiger.class, "Shere Khan");
 ```
 
-- module 3 @see https://www.baeldung.com/spring-factorybean
+- module 3 @see https://www.baeldung.com/spring-factorybean @see https://spring.io/blog/2011/08/09/what-s-a-factorybean
+> There are two kinds of beans in the Spring bean container: ordinary beans and factory beans. Spring uses the former directly, whereas latter can produce objects themselves, which are managed by the framework
 
 - module 4 @see https://www.baeldung.com/spring-beans-factory-methods
 
