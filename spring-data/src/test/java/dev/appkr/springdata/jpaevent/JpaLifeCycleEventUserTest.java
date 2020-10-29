@@ -1,6 +1,5 @@
 package dev.appkr.springdata.jpaevent;
 
-import dev.appkr.springdata.SpringDataExampleApplication;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,10 +10,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.transaction.Transactional;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = {SpringDataExampleApplication.class})
+@SpringBootTest
 class JpaLifeCycleEventUserTest {
 
   private JpaLifeCycleEventUser sut;

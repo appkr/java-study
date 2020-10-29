@@ -9,11 +9,12 @@ import lombok.extern.slf4j.Slf4j;
 import javax.persistence.*;
 
 @Entity
+@EntityListeners({AuditTrailListener.class})
 @Getter
 @Setter
 @ToString
 @Slf4j
-public class JpaLifeCycleEventUser {
+public class JpaLifeCycleEventUser implements Identifiable {
 
   @Id
   @GeneratedValue
