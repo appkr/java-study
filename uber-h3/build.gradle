@@ -1,0 +1,18 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    implementation 'com.uber:h3:3.6.4'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+}
+
+application {
+    mainClassName = 'h3.example.App'
+}
