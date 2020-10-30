@@ -10,3 +10,11 @@ So, if we create a new entity and call the save method of our repository, our me
 For the `@PostPersist`, `@PostRemove` and `@PostUpdate` operations, the documentation mentions that these events can happen right after the operation occurs, after a flush, or at the end of a transaction.
 
 **We should note that the `@PreUpdate` callback is only called if the data is actually changed — that is if there's an actual SQL update statement to run. The `@PostUpdate` callback is called regardless of whether anything actually changed**.
+
+- [Hibernate Envers](https://www.baeldung.com/database-auditing-jpa#hibernate)
+```
+Foo ---> Bar
+Bar <>-> Foo
+```
+also @see https://m.blog.naver.com/rorean/221491945411
+also @see https://github.com/spring-projects/spring-data-envers/tree/master/src/test/java/org/springframework/data/envers

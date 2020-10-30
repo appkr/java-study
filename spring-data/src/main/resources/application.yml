@@ -20,3 +20,6 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+      # hibernate envers properties
+      # @see https://docs.jboss.org/envers/docs/#configuration
+      org.hibernate.envers.audit_table_suffix: _audit_log
