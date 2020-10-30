@@ -55,6 +55,7 @@ class FooRepositoryTest {
     final Optional<Revision<Long, Foo>> revision = repository.findLastChangeRevision(foo.getId());
     final Page<Revision<Long, Foo>> page = repository.findRevisions(foo.getId(), PageRequest.of(0, 10));
 
+    // then
     revision.ifPresent(r -> {
       log.info("Revision entity {}", r.getEntity());
       log.info("Revision metadata {}", r.getMetadata());
