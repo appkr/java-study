@@ -23,3 +23,7 @@
 
 [토크ON세미나] 쿠버네티스 살펴보기 7강 - Kubernetes(쿠버네티스) 실습 2 | T아카데미
 [https://www.youtube.com/watch?v=v6TUgqfV3Fo](https://www.youtube.com/watch?v=v6TUgqfV3Fo)
+
+## Other References
+
+- Just Wow!!! [How to Deploy a Kubernetes Cluster from Scratch](https://www.youtube.com/watch?v=t4H6hdvB9iQ&feature=emb_logo)
