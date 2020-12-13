@@ -22,6 +22,9 @@ dependencies {
 	// envers
 	implementation 'org.springframework.data:spring-data-envers:2.3.4.RELEASE'
 
+	// java-object-diff
+	implementation 'de.danielbechler:java-object-diff:0.95'
+
 	// lombok
 	implementation 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
