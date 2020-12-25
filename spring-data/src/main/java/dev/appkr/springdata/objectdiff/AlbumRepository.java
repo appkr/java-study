@@ -1,4 +1,4 @@
-package dev.appkr.springdata.javer;
+package dev.appkr.springdata.objectdiff;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

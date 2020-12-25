@@ -1,6 +1,6 @@
-package dev.appkr.springdata.envers2.repository;
+package dev.appkr.springdata.envers2;
 
-import dev.appkr.springdata.envers2.model.Address;
+import dev.appkr.springdata.envers2.Address;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.history.RevisionRepository;
 

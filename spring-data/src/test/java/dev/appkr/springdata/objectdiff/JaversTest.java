@@ -1,13 +1,16 @@
-package dev.appkr.springdata.javer;
+package dev.appkr.springdata.objectdiff;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import dev.appkr.springdata.objectdiff.Album;
+import dev.appkr.springdata.objectdiff.AlbumRepository;
+import dev.appkr.springdata.objectdiff.Singer;
+import dev.appkr.springdata.objectdiff.SingerRepository;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.javers.core.Javers;
 import org.javers.core.JaversBuilder;
 import org.javers.core.diff.Diff;
-import org.javers.core.diff.changetype.NewObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

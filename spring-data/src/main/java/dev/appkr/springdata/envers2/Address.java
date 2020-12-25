@@ -1,4 +1,4 @@
-package dev.appkr.springdata.envers2.model;
+package dev.appkr.springdata.envers2;
 
 import lombok.*;
 import org.hibernate.envers.Audited;

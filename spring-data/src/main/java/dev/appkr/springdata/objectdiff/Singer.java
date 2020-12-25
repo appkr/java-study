@@ -1,4 +1,4 @@
-package dev.appkr.springdata.javer;
+package dev.appkr.springdata.objectdiff;
 
 import java.util.HashSet;
 import java.util.Set;

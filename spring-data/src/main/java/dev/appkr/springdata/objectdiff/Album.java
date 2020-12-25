@@ -1,4 +1,4 @@
-package dev.appkr.springdata.javer;
+package dev.appkr.springdata.objectdiff;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

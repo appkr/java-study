@@ -1,4 +1,4 @@
-package dev.appkr.springdata.javer;
+package dev.appkr.springdata.objectdiff;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;

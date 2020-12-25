@@ -3,7 +3,7 @@
  * @see https://okky.kr/article/363302
  * @see https://github.com/Leibosite/museum-parent/blob/master/museum-agent/src/main/java/com/qingruan/museum/agent/modified/event/PostUpdateEventListenerImpl.java
  */
-package dev.appkr.springdata.javer;
+package dev.appkr.springdata.objectdiff;
 
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.event.spi.PostUpdateEvent;

@@ -6,22 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-/**
- *   class ChangeLog {
- *     '수정시각
- *     - changedAt:DateTime
- *     '담당자
- *     - changedBy:UserDetails
- *     '수정항목
- *     - changedField:String
- *     '수정전
- *     - beforeValue:Object
- *     '수정후
- *     - afterValue:Object
- *     '비고 (메모)
- *     - note:String
- *   }
- */
 @Getter
 @NoArgsConstructor
 @ToString

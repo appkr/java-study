@@ -3,20 +3,20 @@ package dev.appkr.springdata.objectdiff;
 import de.danielbechler.diff.ObjectDifferBuilder;
 import de.danielbechler.diff.node.DiffNode;
 import de.danielbechler.diff.node.Visit;
-import dev.appkr.springdata.envers2.model.Address;
-import dev.appkr.springdata.envers2.model.Person;
+import dev.appkr.springdata.envers2.Address;
+import dev.appkr.springdata.envers2.Person;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JavaObjectDiffTest {
+public class PojoDiffTest {
 
   private final Logger log = LoggerFactory.getLogger(getClass());
 
   @Test
-  public void testJavaObjectDiff() {
+  public void testPojoDiff() {
     Address baseAddr = new Address("서울특별시 강남구 삼성동 159-17", 5);
     Person base = new Person("메쉬", "김", baseAddr);
 

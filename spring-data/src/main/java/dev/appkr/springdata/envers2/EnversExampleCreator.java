@@ -1,8 +1,5 @@
 package dev.appkr.springdata.envers2;
 
-import dev.appkr.springdata.envers2.model.Address;
-import dev.appkr.springdata.envers2.model.Person;
-import dev.appkr.springdata.envers2.repository.PersonRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
