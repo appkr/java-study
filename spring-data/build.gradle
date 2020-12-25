@@ -25,6 +25,9 @@ dependencies {
 	// java-object-diff
 	implementation 'de.danielbechler:java-object-diff:0.95'
 
+	// javer
+	implementation 'org.javers:javers-spring-boot-starter-sql:5.14.0'
+
 	// lombok
 	implementation 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
