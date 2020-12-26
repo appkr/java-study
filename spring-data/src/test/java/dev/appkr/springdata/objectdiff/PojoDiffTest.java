@@ -1,12 +1,20 @@
 package dev.appkr.springdata.objectdiff;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import de.danielbechler.diff.ObjectDifferBuilder;
-import de.danielbechler.diff.node.DiffNode;
-import de.danielbechler.diff.node.Visit;
+import de.danielbechler.diff.node.*;
+import de.danielbechler.diff.node.DiffNode.State;
+import de.danielbechler.diff.node.DiffNode.Visitor;
+import de.danielbechler.diff.path.NodePath;
 import dev.appkr.springdata.envers2.Address;
 import dev.appkr.springdata.envers2.Person;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,5 +94,88 @@ public class PojoDiffTest {
      *   )
      * ]
      */
+  }
+
+  @Test
+  public void testMapDiff() {
+    Map<String, String> working = Collections.singletonMap("item", "foo");
+    Map<String, String> base = Collections.singletonMap("item", "bar");
+    DiffNode diff = ObjectDifferBuilder.buildDefault().compare(working, base);
+
+    assertTrue(diff.hasChanges());
+    assertEquals(1, diff.childCount());
+
+    NodePath itemPath = NodePath.startBuilding().mapKey("item").build();
+    assertEquals(DiffNode.State.CHANGED, diff.getChild(itemPath).getState());
+
+    log.info("diff {}", diff);
+    log.info("itemPath {}", itemPath);
+  }
+
+  @Test
+  public void testTraverseNode() {
+    Map<String, String> working = Collections.singletonMap("item", "foo");
+    Map<String, String> base = Collections.singletonMap("item", "bar");
+    DiffNode diff = ObjectDifferBuilder.buildDefault().compare(working, base);
+
+    diff.visit(new Visitor() {
+      @Override
+      public void node(DiffNode node, Visit visit) {
+        log.info("traverse changes {} => {}", node.getPath(), node.getState());
+      }
+    });
+  }
+
+  @Test
+  public void testReadingValues() {
+    Map<String, String> working = Collections.singletonMap("item", "foo");
+    Map<String, String> base = Collections.singletonMap("item", "bar");
+    DiffNode diff = ObjectDifferBuilder.buildDefault().compare(working, base);
+
+    diff.visit(new Visitor() {
+      @Override
+      public void node(DiffNode node, Visit visit) {
+        final Object baseValue = node.canonicalGet(base);
+        final Object workingValue = node.canonicalGet(working);
+        log.info("{} changed from {} to {}", node.getPath(), baseValue, workingValue);
+      }
+    });
+  }
+
+  @Test
+  public void testPatching() {
+    Map<String, String> working = Collections.singletonMap("item", "foo");
+    Map<String, String> base = Collections.singletonMap("item", "bar");
+    DiffNode diff = ObjectDifferBuilder.buildDefault().compare(working, base);
+
+    final Map<String, String> head = new HashMap<String, String>(base);
+    head.put("another", "map");
+
+    diff.visit(new Visitor() {
+      @Override
+      public void node(DiffNode node, Visit visit) {
+        // only leaf-nodes with changes
+        if (node.hasChanges() && !node.hasChildren()) {
+          node.canonicalSet(head, node.canonicalGet(working));
+        }
+      }
+    });
+
+    log.info("new map {}", head);
+  }
+
+  @Test
+  public void testBuiltinVisitors() {
+    Map<String, String> working = Collections.singletonMap("item", "foo");
+    Map<String, String> base = Collections.singletonMap("item", "bar");
+
+    DiffNode diff = ObjectDifferBuilder.buildDefault().compare(working, base);
+
+    diff.visit(new CategoryFilteringVisitor());
+    diff.visit(new NodeHierarchyVisitor());
+    diff.visit(new NodePathVisitor(NodePath.startBuilding().mapKey("item").build()));
+    diff.visit(new StateFilteringVisitor(State.CHANGED));
+    diff.visit(new ToMapPrintingVisitor(working, base));
+    diff.visit(new PrintingVisitor(working, base));
   }
 }
