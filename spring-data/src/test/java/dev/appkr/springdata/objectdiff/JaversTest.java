@@ -60,7 +60,7 @@ class JaversTest {
   @Test
   @Transactional
   public void testUpdateEntity() throws CloneNotSupportedException {
-    final Album base = album.clone();
+    final Album base = album.copy();
     album.changeTitle("다시 부르기 2");
     albumRepository.saveAndFlush(album);
 

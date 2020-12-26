@@ -9,12 +9,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import lombok.Getter;
 import lombok.ToString;
 
 @Entity
 @Table(name = "singers")
 @ToString(exclude = {"albums"})
-public class Singer implements Serializable {
+@Getter
+public class Singer implements Serializable, Copyable {
 
   private static final long serialVersionUID = 1L;
 
@@ -40,5 +42,15 @@ public class Singer implements Serializable {
     if (!albums.contains(album)) {
       albums.add(album);
     }
+  }
+
+  public void changeName(String name) {
+    this.name = name;
+  }
+
+  @Override
+  public Singer copy() throws CloneNotSupportedException {
+    Singer singer = (Singer) clone();
+    return singer;
   }
 }

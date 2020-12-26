@@ -7,12 +7,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import lombok.Getter;
 import lombok.ToString;
 
 @Entity
 @Table(name = "albums")
 @ToString
-public class Album implements Cloneable, Serializable {
+@Getter
+public class Album implements Copyable, Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -48,7 +50,9 @@ public class Album implements Cloneable, Serializable {
   }
 
   @Override
-  protected Album clone() throws CloneNotSupportedException {
-    return (Album) super.clone();
+  public Album copy() throws CloneNotSupportedException {
+    Album album = (Album) clone();
+    album.singer = album.singer.copy();
+    return album;
   }
 }

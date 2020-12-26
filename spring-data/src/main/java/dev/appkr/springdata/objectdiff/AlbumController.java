@@ -1,8 +1,5 @@
 package dev.appkr.springdata.objectdiff;
 
-import de.danielbechler.diff.ObjectDifferBuilder;
-import de.danielbechler.diff.node.DiffNode;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,14 +32,23 @@ public class AlbumController {
   @Transactional
   public void update(@PathVariable Integer albumId, @RequestBody AlbumDto dto) {
     albumRepository.findById(albumId).ifPresent(album -> {
-      Album base = null;
-      try {
-        base = album.clone();
-      } catch (CloneNotSupportedException e) {}
+      final ChangeLogCollector collector = new ChangeLogCollector(album);
+
       album.changeTitle(dto.getTitle());
 
-      DiffNode diff = ObjectDifferBuilder.buildDefault().compare(album, base);
-      log.info("diff {}", diff);
+      log.info("changeLogs {}", collector.collect());
+      /**
+       * [
+       *   ChangeLog(
+       *     changedAt=2020-12-26T06:24:07.147154Z,
+       *     changedBy=00000000-0000-0000-0000-000000000000,
+       *     changedField=title,
+       *     beforeValue=다시 부르기,
+       *     afterValue=다시 부르기 2,
+       *     memo=title changed from 다시 부르기 to 다시 부르기 2
+       *   )
+       * ]
+       */
     });
   }
 }

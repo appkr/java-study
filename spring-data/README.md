@@ -96,3 +96,13 @@ where
 #### References
 - https://docs.jboss.org/envers/docs/
 - dev.appkr.springdata.envers2
+
+---
+
+### java-object-diff
+
+> **`CAVEAT`**
+> 
+> which requires your objects **to provide getters** and setters for their properties. However, you don't need to provide setters, if you don't need write access to the properties
+> 
+> @see https://github.com/SQiShER/java-object-diff#caveats
