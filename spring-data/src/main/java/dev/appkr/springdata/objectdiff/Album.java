@@ -1,5 +1,6 @@
 package dev.appkr.springdata.objectdiff;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +12,9 @@ import lombok.ToString;
 @Entity
 @Table(name = "albums")
 @ToString
-public class Album implements Cloneable {
+public class Album implements Cloneable, Serializable {
+
+  private static final long serialVersionUID = 1L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

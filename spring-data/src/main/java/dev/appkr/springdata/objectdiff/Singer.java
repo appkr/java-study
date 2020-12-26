@@ -1,5 +1,6 @@
 package dev.appkr.springdata.objectdiff;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Entity;
@@ -13,7 +14,9 @@ import lombok.ToString;
 @Entity
 @Table(name = "singers")
 @ToString(exclude = {"albums"})
-public class Singer {
+public class Singer implements Serializable {
+
+  private static final long serialVersionUID = 1L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
