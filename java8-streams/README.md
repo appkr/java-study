@@ -5,3 +5,5 @@
 ```
 Source -> Intermediate Operation -> Terminal Operation
 ```
+
+- JAVA8 groupingBy: https://www.baeldung.com/java-groupingby-collector
