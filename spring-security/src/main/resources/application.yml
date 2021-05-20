@@ -1,0 +1,4 @@
+application:
+  jwt:
+    secretKey: JsByhyNKe1js0Z4PqcAn1raG4XgoAGSrqLvdNEuAHsS53JsIM3ez1zNPu2a149wT
+    expiresInSeconds: 3600

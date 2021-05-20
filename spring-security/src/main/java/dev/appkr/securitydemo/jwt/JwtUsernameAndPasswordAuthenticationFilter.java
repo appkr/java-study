@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.Date;
+import java.util.UUID;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,10 +19,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
   private final AuthenticationManager authenticationManager;
+  private final JwtConfig jwtConfig;
 
   public JwtUsernameAndPasswordAuthenticationFilter(
-      AuthenticationManager authenticationManager) {
+      AuthenticationManager authenticationManager, JwtConfig jwtConfig) {
     this.authenticationManager = authenticationManager;
+    this.jwtConfig = jwtConfig;
   }
 
   @Override
@@ -43,15 +45,25 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
   @Override
   protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
       Authentication authResult) throws IOException, ServletException {
-    final String secretKey = "supersecurekeysupersecurekeysupersecurekeysupersecurekeysupersecurekeysupersecurekey";
+    final String secretKey = jwtConfig.getSecretKey();
+    final String jti = UUID.randomUUID().toString();
+    final Date iat = new Date();
+    final Date exp = new Date(System.currentTimeMillis() + jwtConfig.getExpiresInSeconds() * 1000);
     final String token = Jwts.builder()
+        .setId(jti)
         .setSubject(authResult.getName())
         .claim("authorities", authResult.getAuthorities())
-        .setIssuedAt(new Date())
-        .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusWeeks(2)))
+        .setIssuedAt(iat)
+        .setExpiration(exp)
         .signWith(Keys.hmacShaKeyFor(secretKey.getBytes()))
         .compact();
 
+    AccessToken accessToken = new AccessToken(token, iat.getTime(), exp.getTime(), jti);
+    final String body = new ObjectMapper().writeValueAsString(accessToken);
+
     response.addHeader("Authorization", "Bearer " + token);
+    response.setContentType("application/json");
+    response.setCharacterEncoding("UTF-8");
+    response.getWriter().write(body);
   }
 }

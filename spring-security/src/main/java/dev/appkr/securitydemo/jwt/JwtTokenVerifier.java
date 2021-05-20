@@ -23,6 +23,12 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 public class JwtTokenVerifier extends OncePerRequestFilter {
 
+  private final JwtConfig jwtConfig;
+
+  public JwtTokenVerifier(JwtConfig jwtConfig) {
+    this.jwtConfig = jwtConfig;
+  }
+
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
@@ -32,7 +38,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
       return;
     }
 
-    String secretKey = "supersecurekeysupersecurekeysupersecurekeysupersecurekeysupersecurekeysupersecurekey";
+    String secretKey = jwtConfig.getSecretKey();
     try {
       String token = authorizationHeader.replace("Bearer ", "");
       final Jws<Claims> claimsJws = Jwts.parser().setSigningKey(Keys.hmacShaKeyFor(secretKey.getBytes()))

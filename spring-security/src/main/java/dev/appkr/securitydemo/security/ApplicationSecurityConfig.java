@@ -1,6 +1,7 @@
 package dev.appkr.securitydemo.security;
 
 import dev.appkr.securitydemo.auth.ApplicationUserDetailsService;
+import dev.appkr.securitydemo.jwt.JwtConfig;
 import dev.appkr.securitydemo.jwt.JwtTokenVerifier;
 import dev.appkr.securitydemo.jwt.JwtUsernameAndPasswordAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
@@ -21,11 +22,13 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
   private final PasswordEncoder passwordEncoder;
   private final ApplicationUserDetailsService applicationUserDetailsService;
+  private final JwtConfig jwtConfig;
 
   public ApplicationSecurityConfig(PasswordEncoder passwordEncoder,
-      ApplicationUserDetailsService applicationUserDetailsService) {
+      ApplicationUserDetailsService applicationUserDetailsService, JwtConfig jwtConfig) {
     this.passwordEncoder = passwordEncoder;
     this.applicationUserDetailsService = applicationUserDetailsService;
+    this.jwtConfig = jwtConfig;
   }
 
   @Override
@@ -35,8 +38,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         .csrf().disable()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
       .and()
-        .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager()))
-        .addFilterAfter(new JwtTokenVerifier(), JwtUsernameAndPasswordAuthenticationFilter.class)
+        .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig))
+        .addFilterAfter(new JwtTokenVerifier(jwtConfig), JwtUsernameAndPasswordAuthenticationFilter.class)
         .authorizeRequests()
         .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
         .anyRequest().authenticated()
