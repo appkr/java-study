@@ -46,9 +46,9 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
 
       final Claims body = claimsJws.getBody();
       final String username = body.getSubject();
-      final List<Map<String, String>> authorities = (List<Map<String, String>>) body.get("authorities");
+      final List<String> authorities = (List<String>) body.get("authorities");
       final Set<SimpleGrantedAuthority> grantedAuthorities = authorities.stream()
-          .map(m -> new SimpleGrantedAuthority(m.get("authority"))).collect(Collectors.toSet());
+          .map(e -> new SimpleGrantedAuthority(e)).collect(Collectors.toSet());
       final Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, grantedAuthorities);
       SecurityContextHolder.getContext().setAuthentication(authentication);
     } catch (JwtException e) {
