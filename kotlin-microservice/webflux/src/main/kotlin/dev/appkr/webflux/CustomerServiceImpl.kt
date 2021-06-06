@@ -22,8 +22,8 @@ class CustomerServiceImpl : CustomerService {
         initialCustomers.associateBy(Customer::id)
     )
 
-    override fun getCustomer(id: Int): Mono<Customer>? {
-        return customers[id].toMono()
+    override fun getCustomer(id: Int): Mono<Customer> {
+        return customers[id].toMono() ?: Mono.empty()
     }
 
     override fun searchCustomers(nameFilter: String): Flux<Customer> {
@@ -32,10 +32,18 @@ class CustomerServiceImpl : CustomerService {
         }.map(Map.Entry<Int, Customer>::value).toFlux()
     }
 
-    override fun createCustomer(customerMono: Mono<Customer>): Mono<*> {
-        return customerMono.map {
-            customers[it.id] = it
-            Mono.empty<Any>()
+    override fun createCustomer(customerMono: Mono<Customer>): Mono<Customer> {
+//        return customerMono.map {
+//            customers[it.id] = it
+//            it
+//        }
+        return customerMono.flatMap {
+            if (customers[it.id] == null) {
+                customers[it.id] = it
+                it.toMono()
+            } else {
+                Mono.error(CustomerExistException("Customer ${it.id} already exists"))
+            }
         }
     }
 }
