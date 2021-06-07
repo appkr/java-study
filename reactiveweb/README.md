@@ -19,7 +19,7 @@ curl -L -X POST 'http://localhost:8080/employees/update' \
 
 - [Introduction to the Functional Web Framework in Spring 5](https://www.baeldung.com/spring-5-functional-web) see /functional
 ```bash
-curl http://localhost:8080/functional/employees
+curl http://localhost:8080/functional/employees/
 
 curl http://localhost:8080/functional/employees/1
 
@@ -37,4 +37,11 @@ curl -L -X POST 'http://localhost:8080/functional/employees/update' \
 curl http://localhost:8080/users/test
 
 curl http://localhost:8080/players/test
+```
+
+- [Handling Errors in Spring WebFlux](https://www.baeldung.com/spring-webflux-errors) see /errorhandling
+```bash
+curl -s http://localhost:8080/hello\?name\=Foo
+
+curl -s http://localhost:8080/hello
 ```
