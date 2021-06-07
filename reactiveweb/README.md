@@ -31,3 +31,10 @@ curl -L -X POST 'http://localhost:8080/functional/employees/update' \
     "name": "Foo"
 }'
 ```
+
+- [Spring WebFlux Filters](https://www.baeldung.com/spring-webflux-filters) see /filter
+```bash
+curl http://localhost:8080/users/test
+
+curl http://localhost:8080/players/test
+```
