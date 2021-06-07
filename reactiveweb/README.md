@@ -16,3 +16,18 @@ curl -L -X POST 'http://localhost:8080/employees/update' \
     "name": "Foo"
 }'
 ```
+
+- [Introduction to the Functional Web Framework in Spring 5](https://www.baeldung.com/spring-5-functional-web) see /functional
+```bash
+curl http://localhost:8080/functional/employees
+
+curl http://localhost:8080/functional/employees/1
+
+curl -L -X POST 'http://localhost:8080/functional/employees/update' \
+-H 'Authorization: Basic YWRtaW46cGFzc3dvcmQ=' \
+-H 'Content-Type: application/json' \
+-d '{
+    "id": 1,
+    "name": "Foo"
+}'
+```
