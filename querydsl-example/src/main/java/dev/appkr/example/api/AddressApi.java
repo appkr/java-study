@@ -49,7 +49,7 @@ public class AddressApi {
         .number(number)
         .build();
 
-    final Page<Address> all = repository.findAll(searchParam, PaginationUtils.getPageable(page, size));
+    final Page<Address> all = repository.findAllAddressBy(searchParam, PaginationUtils.getPageable(page, size));
 
     return AddressListDto.builder()
         .data(all.getContent())
