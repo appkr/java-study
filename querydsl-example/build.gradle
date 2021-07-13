@@ -19,14 +19,30 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.apache.commons:commons-lang3:3.9'
+
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	runtimeOnly 'mysql:mysql-connector-java'
+	implementation 'com.querydsl:querydsl-jpa:4.4.0'
+	implementation 'com.querydsl:querydsl-core:4.4.0'
+	compileOnly 'com.querydsl:querydsl-apt:4.4.0'
+	annotationProcessor 'com.querydsl:querydsl-apt:4.4.0:jpa'
+	annotationProcessor 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.2.Final'
+
+	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 test {
 	useJUnitPlatform()
+}
+
+sourceSets {
+	main.java.srcDirs += ['build/generated/sources/annotationProcessor/java/main']
 }
