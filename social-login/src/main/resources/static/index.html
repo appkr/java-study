@@ -10,6 +10,7 @@
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css"/>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -19,15 +20,38 @@
   </div>
   <div class="container authenticated" style="display:none">
     Logged in as: <span id="user"></span>
+    <div>
+      <button onClick="logout()" class="btn btn-primary">Logout</button>
+    </div>
   </div>
 </div>
 
 <script type="text/javascript">
+  $.ajaxSetup({
+    beforeSend : function(xhr, settings) {
+      if (settings.type == 'POST' || settings.type == 'PUT' || settings.type == 'DELETE') {
+        if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+          // Only send the token to relative URLs i.e. locally.
+          xhr.setRequestHeader("X-XSRF-TOKEN", Cookies.get('XSRF-TOKEN'));
+        }
+      }
+    }
+  });
+
   $.get("/user", function(data) {
     $("#user").html(data.attributes.login);
     $(".unauthenticated").hide()
     $(".authenticated").show()
   });
+
+  var logout = function() {
+    $.post("/logout", function() {
+      $("#user").html('');
+      $(".unauthenticated").show();
+      $(".authenticated").hide();
+    })
+    return true;
+  }
 </script>
 </body>
 </html>
