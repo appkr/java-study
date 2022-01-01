@@ -1,0 +1,20 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ['*']
+  endpoint:
+    # @see https://cloud.spring.io/spring-cloud-gateway/reference/html/#actuator-api
+    # @run curl -s http://localhost:8080/actuator/gateway/routes
+    gateway:
+      enabled: true
+  info:
+    git:
+      mode: simple
+spring:
+  cloud:
+    gateway.actuator.verbose.enabled: true
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty.http.client: DEBUG

@@ -1,0 +1,36 @@
+plugins {
+	id 'org.springframework.boot' version '2.6.2'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'com.gorylenko.gradle-git-properties' version '2.3.1'
+}
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+
+    group = 'dev.appkr'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = '11'
+    targetCompatibility = '11'
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'com.gorylenko.gradle-git-properties'
+
+    dependencies {
+        implementation platform('org.springframework.cloud:spring-cloud-dependencies:2021.0.0')
+        implementation 'org.springframework.boot:spring-boot-starter-actuator'
+        implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    }
+}
+
+test {
+	useJUnitPlatform()
+}
