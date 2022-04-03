@@ -1,0 +1,33 @@
+@startuml
+
+participant LoadTest as a
+participant Webmvc as b
+participant Remote as c
+participant InternalService as d
+
+a -> a: create 100 threads
+note right
+  Simulate 100 concurrent users
+end note
+a -> b: GET /rest (1~100)
+note right
+  Webmvc has only 1 tomcat thread
+end note
+  b -> c: GET /remote1
+  note right
+    takes 1 sec
+  end note
+  b <-- c: res1
+  b -> c: GET /remote2
+  note right
+    takes 1 sec
+  end note
+b <-- c: res2
+  b -\ d: handle
+  note right
+    @Async
+  end note
+  b /-- d: res3
+a <- b: res3
+
+@enduml
