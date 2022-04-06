@@ -23,6 +23,13 @@ import org.springframework.web.bind.annotation.RestController;
     return  req + "/remote2";
   }
 
+  @GetMapping("/dbcall")
+  @SneakyThrows
+  public String dbCall(String req) {
+    Thread.sleep(10);
+    return  "resultSet";
+  }
+
   public static void main(String[] args) {
     System.setProperty("server.port", "8081");
     SpringApplication.run(Remote.class, args);
