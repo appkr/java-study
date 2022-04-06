@@ -41,15 +41,15 @@ public class Webflux {
   static class InternalService {
     @SneakyThrows
     public CompletableFuture<String> handle(String req) {
-//      Thread.sleep(1000);
       return CompletableFuture.supplyAsync(() -> req + "/asyncWork", es);
     }
   }
 
   public static void main(String[] args) {
     System.setProperty("server.port", "8080");
-    System.setProperty("reactor.ipc.netty.workerCount", "1");
-    System.setProperty("reactor.ipc.netty.pool.maxConnections", "2000");
+    // @see reactor.netty.ReactorNetty
+    System.setProperty("reactor.netty.ioWorkerCount", "1");
+    System.setProperty("reactor.netty.pool.maxConnections", "2000");
     SpringApplication.run(Webflux.class, args);
   }
 }

@@ -26,6 +26,13 @@ public class Remote {
     return  req + "/remote2";
   }
 
+  @GetMapping("/dbcall")
+  @SneakyThrows
+  public String dbCall() {
+    Thread.sleep(10);
+    return "resultSet";
+  }
+
   public static void main(String[] args) {
     System.setProperty("server.port", "8081");
     SpringApplication.run(Remote.class, args);
