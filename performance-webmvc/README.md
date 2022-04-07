@@ -1,6 +1,7 @@
 WebMVC vs WebFlux 컴퓨팅 리소스 사용 비교 실험
 
-@see https://www.youtube.com/watch?v=ScH7NZU_zvk&list=PLv-xDnFD-nnmof-yoZQN8Fs2kVljIuFyC
+토비의 봄 TV @see https://www.youtube.com/watch?v=ScH7NZU_zvk&list=PLv-xDnFD-nnmof-yoZQN8Fs2kVljIuFyC
+Java Concurrency @see https://www.youtube.com/watch?v=WH5UvQJizH0&list=PLhfHPmPYPPRk6yMrcbfafFGSbE2EPK_A6
 
 #### Scenario
 
