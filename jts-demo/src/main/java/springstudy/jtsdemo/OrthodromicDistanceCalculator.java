@@ -14,6 +14,8 @@ public class OrthodromicDistanceCalculator {
      * @param a
      * @param b
      * @return Distance in Meters
+     * @see https://docs.geotools.org/stable/userguide/library/referencing/calculator.html
+     *      orthodromicDistance() API가 GeodeticCalculator를 이용해서 meter 단위로 결과를 계산해 줌
      */
     public static Distance calculate(Coordinate a, Coordinate b) {
         double distance = 0.0;
