@@ -5,7 +5,7 @@ plugins {
 
 repositories {
     maven {
-        setUrl("http://maven.geomajas.org")
+        setUrl("https://repo.osgeo.org/repository/release/")
     }
     mavenCentral()
     jcenter()
@@ -13,9 +13,9 @@ repositories {
 
 dependencies {
     implementation("com.google.guava:guava:27.0.1-jre")
-    compile("org.locationtech.jts:jts-core:1.16.1")
-    compile("org.locationtech.jts:jts-modules:1.16.1")
-    compile("org.geotools:gt-main:21.2")
+    implementation("org.locationtech.jts:jts-core:1.18.2")
+    implementation("org.locationtech.jts:jts-modules:1.18.2")
+    implementation("org.geotools:gt-main:27.0")
 
     testImplementation("junit:junit:4.12")
 }
