@@ -1,3 +1,6 @@
+### GRPC Stub ###
+src/generated
+
 HELP.md
 .gradle
 build/
