@@ -6,14 +6,14 @@
 # Tomcat started on port(s): 8080
 # gRPC Server started, listening on address: *, port: 8090
 
-curl http://localhost:8080/actuator/health
+curl -s http://localhost:8080/actuator/health
 # {
 #   "grpcChannel": {
 #     "status": "UP"
 #   },
 # }
 
-curl http://localhost:8080/actuator/info
+curl -s http://localhost:8080/actuator/info
 # {
 #   "grpc.server": {
 #     "port": 8090,
@@ -44,6 +44,14 @@ grpcurl --plaintext localhost:8090 list grpcdemo.HelloService
 # grpcdemo.HelloService.SayHello
 
 grpcurl --plaintext -d '{"name": "gRPC"}' localhost:8090 grpcdemo.HelloService.SayHello
+# {
+#   "message": "Hello gRPC"
+# }
+```
+
+### Test with gRPC client via HTTP
+```bash
+curl -s http://localhost:8080/hello?name=gRPC
 # {
 #   "message": "Hello gRPC"
 # }
