@@ -1,1 +1,22 @@
+spring:
+  application:
+    name: grpcdemo
 
+grpc:
+  server:
+    port: 8090
+  client:
+    hello-service:
+      address: 'static://127.0.0.1:8090'
+      negotiationType: plaintext
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ['health', 'info', 'metrics']
+  endpoint:
+    metrics.enabled: true
+    info.enabled: true
+    health.show-details: always
+  info.git.mode: simple
