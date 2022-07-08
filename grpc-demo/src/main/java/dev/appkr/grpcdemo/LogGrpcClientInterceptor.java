@@ -1,8 +1,6 @@
 // @see https://stackoverflow.com/a/68102211/4737224
 package dev.appkr.grpcdemo;
 
-import com.fasterxml.jackson.core.util.DefaultIndenter;
-import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.protobuf.GeneratedMessageV3;
 import io.grpc.CallOptions;
@@ -20,11 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 public class LogGrpcClientInterceptor implements ClientInterceptor {
 
   static final ObjectMapper mapper = new ObjectMapper();
-  static {
-    DefaultPrettyPrinter pp = new DefaultPrettyPrinter();
-    pp = pp.withObjectIndenter(new DefaultIndenter("  ", "\n"));
-    mapper.setDefaultPrettyPrinter(pp);
-  }
 
   @Override
   public <ReqT, RespT> ClientCall<ReqT, RespT> interceptCall(MethodDescriptor<ReqT, RespT> method,
@@ -33,7 +26,8 @@ public class LogGrpcClientInterceptor implements ClientInterceptor {
       @SneakyThrows
       @Override
       public void sendMessage(ReqT message) {
-        final String logEntry = mapper.writeValueAsString(((GeneratedMessageV3) message).getAllFields());
+        final String logEntry = mapper.writerWithDefaultPrettyPrinter()
+            .writeValueAsString(((GeneratedMessageV3) message).getAllFields());
         log.info("gRPC request at client\n{}", logEntry);
         super.sendMessage(message);
       }
@@ -44,7 +38,8 @@ public class LogGrpcClientInterceptor implements ClientInterceptor {
           @SneakyThrows
           @Override
           public void onMessage(RespT message) {
-            final String logEntry = mapper.writeValueAsString(((GeneratedMessageV3) message).getAllFields());
+            final String logEntry = mapper.writerWithDefaultPrettyPrinter()
+                .writeValueAsString(((GeneratedMessageV3) message).getAllFields());
             log.info("gRPC response at client\n{}", logEntry);
             super.onMessage(message);
           }

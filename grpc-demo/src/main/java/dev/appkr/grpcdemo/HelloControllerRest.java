@@ -14,7 +14,7 @@ public class HelloControllerRest {
 
   @GetMapping("/hello")
   public Map<String, Object> hello(@RequestParam(value = "name", required = false) String name) {
-    final String message = helloClient.hello(name);
-    return Map.of("message", message);
+    final HelloReply reply = helloClient.hello(name);
+    return Map.of("message", reply.getMessage(), "luckyNumber", reply.getLuckyNumber());
   }
 }
