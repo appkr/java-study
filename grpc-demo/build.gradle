@@ -32,6 +32,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+	implementation 'io.zipkin.brave:brave-instrumentation-grpc'
 
 	// grpc
 	implementation "io.grpc:grpc-protobuf:${grpcVersion}"
