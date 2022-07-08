@@ -56,3 +56,18 @@ curl -s http://localhost:8080/hello?name=gRPC
 #   "message": "Hello gRPC"
 # }
 ```
+
+### Workflow
+- change .proto
+- generate stub
+```bash
+./gradlew generateProto
+```
+- change java implementation (server and client)
+```bash
+curl -s http://localhost:8080/hello?name=gRPC | jq "."
+{
+  "luckyNumber": 1643621454,
+  "message": "Hello gRPC"
+}
+```

@@ -10,13 +10,11 @@ public class HelloClientRpc {
   @GrpcClient(value = "hello-service")
   HelloServiceBlockingStub helloStub;
 
-  public String hello(String name) {
+  public HelloReply hello(String name) {
     final HelloRequest request = HelloRequest.newBuilder()
         .setName(name)
         .build();
 
-    final HelloReply reply = helloStub.sayHello(request);
-
-    return reply.getMessage();
+    return helloStub.sayHello(request);
   }
 }
