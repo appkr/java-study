@@ -6,8 +6,16 @@ option java_multiple_files = true;
 option java_package = "dev.appkr.grpcdemo";
 option java_outer_classname = "Hello";
 
+import "google/protobuf/empty.proto";
+
 service HelloService {
   rpc SayHello (HelloRequest) returns (HelloReply) {
+  }
+
+  rpc invalidArgument(google.protobuf.Empty) returns (google.protobuf.Empty) {
+  }
+
+  rpc notFound(google.protobuf.Empty) returns (google.protobuf.Empty) {
   }
 }
 

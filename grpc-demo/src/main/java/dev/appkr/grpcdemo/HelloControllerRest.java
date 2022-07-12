@@ -17,4 +17,14 @@ public class HelloControllerRest {
     final HelloReply reply = helloClient.hello(name);
     return Map.of("message", reply.getMessage(), "luckyNumber", reply.getLuckyNumber());
   }
+
+  @GetMapping("/exception/invalid-argument")
+  public void invalidArgument() {
+    helloClient.invalidArgument();
+  }
+
+  @GetMapping("/exception/not-found")
+  public void notFound() {
+    helloClient.notFound();
+  }
 }

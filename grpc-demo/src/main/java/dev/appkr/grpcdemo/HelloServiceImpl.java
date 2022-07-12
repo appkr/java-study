@@ -1,5 +1,6 @@
 package dev.appkr.grpcdemo;
 
+import com.google.protobuf.Empty;
 import dev.appkr.grpcdemo.HelloServiceGrpc.HelloServiceImplBase;
 import io.grpc.stub.StreamObserver;
 import java.util.Random;
@@ -16,5 +17,15 @@ public class HelloServiceImpl extends HelloServiceImplBase {
         .build();
     responseObserver.onNext(reply);
     responseObserver.onCompleted();
+  }
+
+  @Override
+  public void invalidArgument(Empty request, StreamObserver<Empty> responseObserver) {
+    responseObserver.onError(new IllegalArgumentException());
+  }
+
+  @Override
+  public void notFound(Empty request, StreamObserver<Empty> responseObserver) {
+    responseObserver.onError(new ResourceNotFoundException());
   }
 }

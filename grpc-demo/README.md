@@ -76,3 +76,27 @@ curl -s http://localhost:8080/hello?name=gRPC | jq "."
 #   "message": "Hello gRPC"
 # }
 ```
+
+### Exception handling
+
+```bash
+$ grpcurl --plaintext localhost:8090 grpcdemo.HelloService.invalidArgument 
+# ERROR:
+#   Code: InvalidArgument
+#   Message: Invalid argument
+
+$ curl -s http://localhost:8080/exception/invalid-argument 
+# 2022-07-12 09:29:13.213 ERROR [grpcdemo,a334a8c714fa7495,a334a8c714fa7495] 96197 --- [nio-8080-exec-1] dev.appkr.grpcdemo.HelloClientRpc        : ERROR
+# io.grpc.StatusRuntimeException: INVALID_ARGUMENT: Invalid argument
+```
+
+```bash
+$ grpcurl --plaintext localhost:8090 grpcdemo.HelloService.notFound       
+# ERROR:
+#   Code: NotFound
+#   Message: Not found
+
+$ curl -s http://localhost:8080/exception/not-found
+# 2022-07-12 09:30:55.196 ERROR [grpcdemo,7c2f5ba009b11dcf,7c2f5ba009b11dcf] 96197 --- [nio-8080-exec-3] dev.appkr.grpcdemo.HelloClientRpc        : ERROR
+# io.grpc.StatusRuntimeException: NOT_FOUND: Not found
+```
