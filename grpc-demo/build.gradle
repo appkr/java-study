@@ -39,6 +39,7 @@ dependencies {
 	implementation "io.grpc:grpc-stub:${grpcVersion}"
 	compileOnly 'jakarta.annotation:jakarta.annotation-api:1.3.5' // Java 9+ compatibility - Do NOT update to 2.0.0
 	implementation "com.google.protobuf:protobuf-java:${protobufVersion}" // Workaround for "cannot find symbol GeneratedMessageV3.isStringEmpty"
+	testImplementation "io.grpc:grpc-testing:${grpcVersion}"
 
 	// grpc-spring framework
 	implementation "net.devh:grpc-spring-boot-starter:${grpcSpringVersion}"
