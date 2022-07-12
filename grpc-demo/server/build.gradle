@@ -1,0 +1,35 @@
+plugins {
+	id 'idea'
+	id 'java'
+	id 'org.springframework.boot'
+	id 'io.spring.dependency-management'
+	id 'io.freefair.lombok'
+	id 'com.google.protobuf'
+}
+
+version = '0.0.1-SNAPSHOT'
+group = 'dev.appkr'
+sourceCompatibility = '11'
+
+dependencies {
+	implementation platform('org.springframework.cloud:spring-cloud-dependencies:2020.0.5')
+
+	implementation 'org.springframework.boot:spring-boot-starter'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+	implementation 'io.zipkin.brave:brave-instrumentation-grpc'
+
+	// grpc
+	testImplementation "io.grpc:grpc-testing:${grpcVersion}"
+
+	// grpc-spring framework
+	implementation "net.devh:grpc-server-spring-boot-starter:${grpcSpringVersion}"
+
+	// proto stub
+	implementation project(':proto')
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
