@@ -5,6 +5,7 @@ plugins {
 	id 'io.spring.dependency-management'
 	id 'io.freefair.lombok'
 	id 'com.google.protobuf'
+	id 'com.google.cloud.tools.jib'
 }
 
 version = '0.0.1-SNAPSHOT'
@@ -33,4 +34,33 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+jib {
+	from {
+		image = 'amazoncorretto:11-alpine-jdk'
+	}
+	to {
+		image = "${rootProject.name}-${project.name}"
+		tags = ['latest']
+	}
+	// If set to packaged, puts the JAR artifact built by the Gradle Java plugin into the final image.
+	// If set to exploded (default), containerizes individual .class files and resources files.
+	containerizingMode = 'packaged'
+	container {
+		jvmFlags = [
+				// Java9 container support @see https://www.eclipse.org/openj9/docs/xxusecontainersupport/
+				'-XX:+UseContainerSupport',
+				'-XX:+HeapDumpOnOutOfMemoryError',
+				'-XX:HeapDumpPath=/tmp',
+				// for G1GC @see https://www.oracle.com/technical-resources/articles/java/g1gc.html
+				'-XX:+UseG1GC',
+				'-Djava.net.preferIPv4Stack=true',
+				'-Duser.timezone=Asia/Seoul',
+				'-Dfile.encoding=UTF8',
+				'-Dsun.net.inetaddr.ttl=30'
+		]
+		ports = ['8080']
+		creationTime = 'USE_CURRENT_TIMESTAMP'
+	}
 }

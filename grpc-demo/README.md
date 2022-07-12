@@ -2,9 +2,12 @@
 
 ### Run
 ```bash
-./gradlew bootRun
-# Tomcat started on port(s): 8080
+./gradlew :proto:generateProto
+./gradlew :server:bootRun
 # gRPC Server started, listening on address: *, port: 8090
+
+./gradlew :client:bootRun
+# Tomcat started on port(s): 8080
 
 curl -s http://localhost:8080/actuator/health
 # {
