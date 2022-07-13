@@ -17,6 +17,7 @@ dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-web' // required for actuator to work
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
 	implementation 'io.zipkin.brave:brave-instrumentation-grpc'
@@ -29,6 +30,11 @@ dependencies {
 
 	// proto stub
 	implementation project(':proto')
+
+	// security
+	implementation 'org.springframework.cloud:spring-cloud-starter-oauth2:2.2.5.RELEASE'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+	testImplementation 'org.springframework.security:spring-security-test'
 }
 
 tasks.named('test') {
@@ -59,7 +65,7 @@ jib {
 				'-Dfile.encoding=UTF8',
 				'-Dsun.net.inetaddr.ttl=30'
 		]
-		ports = ['8090']
+		ports = ['8090', '8081']
 		creationTime = 'USE_CURRENT_TIMESTAMP'
 	}
 }

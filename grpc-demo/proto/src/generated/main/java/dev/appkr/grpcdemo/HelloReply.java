@@ -17,6 +17,7 @@ private static final long serialVersionUID = 0L;
   }
   private HelloReply() {
     message_ = "";
+    principal_ = "";
   }
 
   @java.lang.Override
@@ -58,6 +59,12 @@ private static final long serialVersionUID = 0L;
           case 16: {
 
             luckyNumber_ = input.readInt32();
+            break;
+          }
+          case 26: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            principal_ = s;
             break;
           }
           default: {
@@ -141,6 +148,44 @@ private static final long serialVersionUID = 0L;
     return luckyNumber_;
   }
 
+  public static final int PRINCIPAL_FIELD_NUMBER = 3;
+  private volatile java.lang.Object principal_;
+  /**
+   * <code>string principal = 3;</code>
+   * @return The principal.
+   */
+  @java.lang.Override
+  public java.lang.String getPrincipal() {
+    java.lang.Object ref = principal_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      principal_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string principal = 3;</code>
+   * @return The bytes for principal.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getPrincipalBytes() {
+    java.lang.Object ref = principal_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      principal_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -161,6 +206,9 @@ private static final long serialVersionUID = 0L;
     if (luckyNumber_ != 0) {
       output.writeInt32(2, luckyNumber_);
     }
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(principal_)) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, principal_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -176,6 +224,9 @@ private static final long serialVersionUID = 0L;
     if (luckyNumber_ != 0) {
       size += com.google.protobuf.CodedOutputStream
         .computeInt32Size(2, luckyNumber_);
+    }
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(principal_)) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, principal_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -196,6 +247,8 @@ private static final long serialVersionUID = 0L;
         .equals(other.getMessage())) return false;
     if (getLuckyNumber()
         != other.getLuckyNumber()) return false;
+    if (!getPrincipal()
+        .equals(other.getPrincipal())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -211,6 +264,8 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getMessage().hashCode();
     hash = (37 * hash) + LUCKYNUMBER_FIELD_NUMBER;
     hash = (53 * hash) + getLuckyNumber();
+    hash = (37 * hash) + PRINCIPAL_FIELD_NUMBER;
+    hash = (53 * hash) + getPrincipal().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -348,6 +403,8 @@ private static final long serialVersionUID = 0L;
 
       luckyNumber_ = 0;
 
+      principal_ = "";
+
       return this;
     }
 
@@ -376,6 +433,7 @@ private static final long serialVersionUID = 0L;
       dev.appkr.grpcdemo.HelloReply result = new dev.appkr.grpcdemo.HelloReply(this);
       result.message_ = message_;
       result.luckyNumber_ = luckyNumber_;
+      result.principal_ = principal_;
       onBuilt();
       return result;
     }
@@ -430,6 +488,10 @@ private static final long serialVersionUID = 0L;
       }
       if (other.getLuckyNumber() != 0) {
         setLuckyNumber(other.getLuckyNumber());
+      }
+      if (!other.getPrincipal().isEmpty()) {
+        principal_ = other.principal_;
+        onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -563,6 +625,82 @@ private static final long serialVersionUID = 0L;
     public Builder clearLuckyNumber() {
       
       luckyNumber_ = 0;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object principal_ = "";
+    /**
+     * <code>string principal = 3;</code>
+     * @return The principal.
+     */
+    public java.lang.String getPrincipal() {
+      java.lang.Object ref = principal_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        principal_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string principal = 3;</code>
+     * @return The bytes for principal.
+     */
+    public com.google.protobuf.ByteString
+        getPrincipalBytes() {
+      java.lang.Object ref = principal_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        principal_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string principal = 3;</code>
+     * @param value The principal to set.
+     * @return This builder for chaining.
+     */
+    public Builder setPrincipal(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      principal_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string principal = 3;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearPrincipal() {
+      
+      principal_ = getDefaultInstance().getPrincipal();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string principal = 3;</code>
+     * @param value The bytes for principal to set.
+     * @return This builder for chaining.
+     */
+    public Builder setPrincipalBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      principal_ = value;
       onChanged();
       return this;
     }

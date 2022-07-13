@@ -24,4 +24,16 @@ public interface HelloReplyOrBuilder extends
    * @return The luckyNumber.
    */
   int getLuckyNumber();
+
+  /**
+   * <code>string principal = 3;</code>
+   * @return The principal.
+   */
+  java.lang.String getPrincipal();
+  /**
+   * <code>string principal = 3;</code>
+   * @return The bytes for principal.
+   */
+  com.google.protobuf.ByteString
+      getPrincipalBytes();
 }

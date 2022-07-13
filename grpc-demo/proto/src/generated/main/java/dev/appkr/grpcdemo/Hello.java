@@ -35,14 +35,14 @@ public final class Hello {
     java.lang.String[] descriptorData = {
       "\n\013hello.proto\022\010grpcdemo\032\033google/protobuf" +
       "/empty.proto\"\034\n\014HelloRequest\022\014\n\004name\030\001 \001" +
-      "(\t\"2\n\nHelloReply\022\017\n\007message\030\001 \001(\t\022\023\n\013luc" +
-      "kyNumber\030\002 \001(\0052\315\001\n\014HelloService\022:\n\010SayHe" +
-      "llo\022\026.grpcdemo.HelloRequest\032\024.grpcdemo.H" +
-      "elloReply\"\000\022C\n\017invalidArgument\022\026.google." +
-      "protobuf.Empty\032\026.google.protobuf.Empty\"\000" +
-      "\022<\n\010notFound\022\026.google.protobuf.Empty\032\026.g" +
-      "oogle.protobuf.Empty\"\000B\035\n\022dev.appkr.grpc" +
-      "demoB\005HelloP\001b\006proto3"
+      "(\t\"E\n\nHelloReply\022\017\n\007message\030\001 \001(\t\022\023\n\013luc" +
+      "kyNumber\030\002 \001(\005\022\021\n\tprincipal\030\003 \001(\t2\315\001\n\014He" +
+      "lloService\022:\n\010SayHello\022\026.grpcdemo.HelloR" +
+      "equest\032\024.grpcdemo.HelloReply\"\000\022C\n\017invali" +
+      "dArgument\022\026.google.protobuf.Empty\032\026.goog" +
+      "le.protobuf.Empty\"\000\022<\n\010notFound\022\026.google" +
+      ".protobuf.Empty\032\026.google.protobuf.Empty\"" +
+      "\000B\035\n\022dev.appkr.grpcdemoB\005HelloP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -60,7 +60,7 @@ public final class Hello {
     internal_static_grpcdemo_HelloReply_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_grpcdemo_HelloReply_descriptor,
-        new java.lang.String[] { "Message", "LuckyNumber", });
+        new java.lang.String[] { "Message", "LuckyNumber", "Principal", });
     com.google.protobuf.EmptyProto.getDescriptor();
   }
 
