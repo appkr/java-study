@@ -16,7 +16,11 @@ public class HelloControllerRest {
   @GetMapping("/hello")
   public Map<String, Object> hello(@RequestParam(value = "name", required = false) String name) {
     final HelloReply reply = helloClient.hello(name);
-    return Map.of("message", reply.getMessage(), "luckyNumber", reply.getLuckyNumber());
+    return Map.of(
+        "message", reply.getMessage(),
+        "luckyNumber", reply.getLuckyNumber(),
+        "principal", reply.getPrincipal()
+    );
   }
 
   @GetMapping("/exception/invalid-argument")

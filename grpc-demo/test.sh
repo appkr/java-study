@@ -26,7 +26,7 @@ check_docker() {
   if [ "1" != "$OK" ]; then
     echo -e "${RED}mysql or jhipster-uaa docker container is not running${NC}"
     echo ""
-    echo -e "    ${BOLD}./gradlew clusterUp${NC}"
+    echo -e "    ${BOLD}./gradlew composeUp${NC}"
     echo ""
     exit 1
   fi
@@ -110,8 +110,8 @@ print_request "grpcurl --plaintext localhost:8090 list grpcdemo.HelloService"
 grpcurl --plaintext localhost:8090 list grpcdemo.HelloService
 echo ""
 
-print_request "grpcurl --plaintext -H \"Authorization: bearer ${ACCESS_TOKEN}\" -d '{\"name": "gRPC\"}' localhost:8090 grpcdemo.HelloService.SayHello"
-grpcurl --plaintext -H "Authorization: bearer ${ACCESS_TOKEN}" -d '{"name": "gRPC"}' localhost:8090 grpcdemo.HelloService.SayHello
+print_request "grpcurl --plaintext -H \"Authorization: bearer ACCESS_TOKEN\" -d '{\"name\": \"gRPC1\"}' localhost:8090 grpcdemo.HelloService.SayHello"
+grpcurl --plaintext -H "Authorization: bearer ${ACCESS_TOKEN}" -d '{"name": "gRPC1"}' localhost:8090 grpcdemo.HelloService.SayHello
 
 print_separator
 
@@ -121,5 +121,5 @@ echo "| curl |  -(http)-> | tomcat & gRPC client | -(grpc)-> | gRPC server |"
 echo "+------+            +----------------------+           +-------------+"
 echo ""
 
-print_request "curl -s http://localhost:8080/hello?name=gRPC"
-curl -s http://localhost:8080/hello?name=gRPC | jq
+print_request "curl -s -H \"Authorization: bearer ACCESS_TOKEN\" http://localhost:8080/hello?name=gRPC2"
+curl -s -H "Authorization: bearer ${ACCESS_TOKEN}" http://localhost:8080/hello?name=gRPC2 | jq

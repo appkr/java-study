@@ -30,6 +30,11 @@ dependencies {
 
 	// proto stub
 	implementation project(':proto')
+
+	// security
+	implementation 'org.springframework.cloud:spring-cloud-starter-oauth2:2.2.5.RELEASE'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+	testImplementation 'org.springframework.security:spring-security-test'
 }
 
 tasks.named('test') {
