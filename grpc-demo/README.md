@@ -146,3 +146,56 @@ docker container restart grpc-demo-client
 
 bash test.sh
 ```
+
+### Test at Kubernetes
+
+Tag and push images to the docker registry
+
+```bash
+docker login
+
+docker tag grpc-demo-server:latest {REGISTRY}/grpc-demo-server:latest
+docker tag grpc-demo-client:latest {REGISTRY}/grpc-demo-client:latest
+
+docker push {REGISTRY}/grpc-demo-server:latest
+docker push {REGISTRY}/grpc-demo-client:latest
+```
+
+Apply the K8S manifests and test 
+
+```bash
+# Apply the K8S manifests
+kubectl apply -f k8s/grpc-demo-server.yml
+kubectl apply -f k8s/grpc-demo-client.yml
+
+# Log in to a POD
+kubectl exec -it {GRPC-DEMO-CLIENT_POD} -- bash
+
+# Check if the services are up and running
+curl -s http://grpc-demo-client:20001/actuator/health
+curl -s http://grpc-demo-server:20002/actuator/health
+
+# jq binary is required...
+yum install jq
+
+# Login to the UAA with a "client_credentials" grant
+CLIENT_ID={}
+CLIENT_SECRET={}
+RESPONSE=$(curl -s -X POST --data "grant_type=client_credentials" http://$CLIENT_ID:$CLIENT_SECRET@uaa:9999/oauth/token)
+ACCESS_TOKEN=$(echo $RESPONSE | jq .access_token | xargs)
+
+# Check if all the services are OK
+curl -s -H "Authorization: bearer ${ACCESS_TOKEN}" http://localhost:8080/hello?name=gRPC2 | jq
+# {
+#   "message": "Hello gRPC2",
+#   "principal": "org.springframework.security.oauth2.jwt.Jwt@e97a6ce",
+#   "luckyNumber": 928785054
+# }
+```
+
+Cleanup K8S resources
+```bash
+kubectl delete deployment grpc-demo-server grpc-demo-client
+kubectl delete service grpc-demo-server grpc-demo-client
+kubectl delete configmap grpc-demo-server grpc-demo-client
+```

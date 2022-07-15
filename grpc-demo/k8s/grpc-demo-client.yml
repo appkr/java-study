@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grpc-demo-client
+  namespace: vroong-dev1
+  labels:
+    app: grpc-demo-client
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: grpc-demo-client
+  template:
+    metadata:
+      labels:
+        app: grpc-demo-client
+    spec:
+      containers:
+        - name: grpc-demo-client
+          image: appkr/grpc-demo-client:latest
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: web
+              scheme: HTTP
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: web
+              scheme: HTTP
+          resources:
+            limits:
+              cpu: 1
+              memory: 1Gi
+            requests:
+              cpu: 1
+              memory: 1Gi
+          ports:
+            - containerPort: 8080
+              name: web
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: grpc-demo-client
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: grpc-demo-client
+  namespace: vroong-dev1
+spec:
+  selector:
+    app: grpc-demo-client
+  ports:
+    - name: http
+      protocol: TCP
+      port: 20001
+      targetPort: 8080
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grpc-demo-client
+  namespace: vroong-dev1
+data:
+  GRPC_CLIENT_HELLOSERVICE_ADDRESS: static://grpc-demo-server:20003
+  SECURITY_OAUTH2_CLIENT_ACCESSTOKENURI: http://uaa:9999/oauth/token
+  SECURITY_OAUTH2_CLIENT_USERAUTHORIZATIONURI: http://uaa:9999/oauth/token
+  SECURITY_OAUTH2_CLIENT_CLIENTID: FILL_VALUE
+  SECURITY_OAUTH2_CLIENT_CLIENTSECRET: FILL_VALUE
+  SECURITY_OAUTH2_RESOURCE_JWT_KEYURI: http://uaa:9999/oauth/token_key
