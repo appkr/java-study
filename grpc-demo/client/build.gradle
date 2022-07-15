@@ -43,7 +43,17 @@ tasks.named('test') {
 
 jib {
 	from {
-		image = 'amazoncorretto:11-alpine-jdk'
+		image = 'amazoncorretto:11-al2-jdk'
+		platforms {
+			platform {
+				architecture = 'amd64'
+				os = 'linux'
+			}
+//			platform {
+//				architecture = 'arm64'
+//				os = 'linux'
+//			}
+		}
 	}
 	to {
 		image = "${rootProject.name}-${project.name}"

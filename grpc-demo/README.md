@@ -106,3 +106,43 @@ bash test.sh
 ```
 
 - change java implementation (server and client)
+
+### Containerize and test at local computer
+
+Select your architecture: If your Mac has an arm architecture(apple silicon) change the following file...
+
+```groovy
+// server/build.gradle, client/build.gradle
+jib {
+    from {
+        image = 'amazoncorretto:11-al2-jdk'
+        platforms {
+//			platform {
+//				architecture = 'amd64'
+//				os = 'linux'
+//			}
+            platform {
+                architecture = 'arm64'
+                os = 'linux'
+            }
+        }
+    }
+}
+```
+
+Run the cluster
+
+```bash
+./gradlew :server:jibDockerBuild
+./gradlew :client:jibDockerBuild
+# If it fails because of docker hub auth, provide more option to the command
+# ... -Djib.from.auth.username={USERNAME} -Djib.from.auth.password={PASSWORD}
+
+docker-compose -f docker/cluster-compose.yml up
+
+# Since client depends on jhipster-uaa /oauth/token_key at start-up time
+# we have to restart the client after the jhipster-uaa is completely available
+docker container restart grpc-demo-client
+
+bash test.sh
+```
