@@ -2,3 +2,4 @@ rootProject.name = 'graphql-demo'
 
 include('edge')
 include('backend')
+include('shared')

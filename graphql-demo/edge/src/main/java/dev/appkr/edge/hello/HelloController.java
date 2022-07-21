@@ -1,4 +1,4 @@
-package dev.appkr.graphql.hello;
+package dev.appkr.edge.hello;
 
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;

@@ -6,6 +6,8 @@ plugins {
 }
 
 dependencies {
+    implementation project(':shared')
+
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
     implementation 'org.springframework.boot:spring-boot-starter-graphql'
@@ -13,6 +15,11 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'
     testImplementation 'org.springframework.graphql:spring-graphql-test'
+
+    // WORKAROUND for apple silicon
+    // ERROR [,,] 50545 --- [           main] i.n.r.d.DnsServerAddressStreamProviders  :
+    // Unable to load io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS.
+    implementation 'io.netty:netty-resolver-dns-native-macos:4.1.77.Final:osx-aarch_64'
 }
 
 tasks.named('test') {
