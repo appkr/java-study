@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'idea'
+    id 'com.avast.gradle.docker-compose' version '0.16.8'
     id 'org.springframework.boot' version '2.7.1' apply false
     id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply false
     id 'io.freefair.lombok' version '6.3.0' apply false
@@ -14,4 +15,8 @@ allprojects {
     repositories {
         mavenCentral()
     }
+}
+
+dockerCompose {
+    useComposeFiles = ['docker/docker-compose.yml']
 }
