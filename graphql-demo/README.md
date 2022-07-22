@@ -95,7 +95,6 @@ User-Agent: curl/7.79.1
 ```
 
 ```shell
-2022-07-22 10:04:47.162  INFO [edge,9e1c7174eb7dfc82,9e1c7174eb7dfc82] 23979 --- [ctor-http-nio-2] d.a.edge.webclient.BackendController     : log test at edge
 2022-07-22 10:04:47.540  INFO [edge,9e1c7174eb7dfc82,9e1c7174eb7dfc82] 23979 --- [ctor-http-nio-2] edge                                     : Outgoing Response: ffbfe223e15396d4
 Duration: 459 ms
 HTTP/1.1 200 OK
