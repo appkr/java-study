@@ -6,11 +6,18 @@ plugins {
 }
 
 dependencies {
+    implementation platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
+    implementation platform("org.zalando:logbook-bom:${logbookVersion}")
+
     implementation project(':shared')
 
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
-
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-graphql'
+    implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+
+    implementation 'org.zalando:logbook-spring-boot-starter'
+    implementation 'org.zalando:logbook-spring-boot-webflux-autoconfigure'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'

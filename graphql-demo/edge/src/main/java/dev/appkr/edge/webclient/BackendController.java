@@ -1,6 +1,7 @@
 package dev.appkr.edge.webclient;
 
 import dev.appkr.shared.model.Album;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.data.method.annotation.BatchMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@Slf4j
 public class BackendController {
 
   WebClient webClient;
@@ -22,6 +24,8 @@ public class BackendController {
 
   @QueryMapping
   public Flux<Album> albums() {
+    log.info("log test at edge");
+
     return this.webClient
         .get()
         .uri("http://localhost:8081/api/albums")

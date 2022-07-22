@@ -1,4 +1,6 @@
 spring:
+  application.name: edge
+
   graphql:
     # Whether the endpoint that prints the schema is enabled.
     # Schema is available under spring.graphql.path + "/schema".
@@ -6,3 +8,7 @@ spring:
     # Whether the default GraphiQL UI is enabled.
     # GET /graphiql
     graphiql.enabled: true
+
+management:
+  endpoints:
+    web.exposure.include: '*'

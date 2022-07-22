@@ -1,6 +1,7 @@
 package dev.appkr.backend;
 
 import dev.appkr.shared.model.Album;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import java.util.Set;
 
 @SpringBootApplication
 @RestController
+@Slf4j
 public class BackendApplication {
 
   AlbumRepository repository;
@@ -23,6 +25,8 @@ public class BackendApplication {
 
   @GetMapping("/api/albums")
   public ResponseEntity<Set<Album>> listAlbums() {
+    log.info("log test at backend");
+
     return ResponseEntity.ok(repository.findAll());
   }
 
