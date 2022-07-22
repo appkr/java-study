@@ -32,9 +32,47 @@ Run the cluster
 curl -s -XPOST -H 'Content-type: application/graphql+json' http://localhost:8080/graphql -d '{
   "query": "{ hello }"
 }' | jq
+
 {
   "data": {
     "hello": "Hello GraphQL"
+  }
+}
+```
+
+### Call backend services using WebClient
+
+```shell
+curl -s -XPOST -H 'Content-type: application/graphql+json' http://localhost:8080/graphql -d '{
+"query": "{albums {id, title, publishedAt, singer {id, name} songs {id, title, playTime}, price}}"
+}' | jq
+
+{
+  "data": {
+    "albums": [
+      {
+        "id": "1",
+        "title": "이문세 5집",
+        "publishedAt": "1987-12-31T15:00:00Z",
+        "singer": {
+          "id": "1",
+          "name": "이문세"
+        },
+        "songs": [
+          {
+            "id": "1",
+            "title": "시를 위한 시",
+            "playTime": "PT3M56S"
+          },
+          {
+            "id": "2",
+            "title": "안개꽃 추억으로",
+            "playTime": "PT5M5S"
+          }
+        ],
+        "price": 10000
+      }
+    ]
   }
 }
 ```
