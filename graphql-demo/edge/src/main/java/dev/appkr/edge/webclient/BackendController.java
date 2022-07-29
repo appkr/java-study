@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.BatchMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Controller;
@@ -30,12 +31,15 @@ public class BackendController {
     return ReactiveSecurityContextHolder.getContext()
         .map(securityContext -> securityContext.getAuthentication().getPrincipal())
         .cast(Jwt.class)
-        .doOnNext(jwt -> log.info("username: {}", jwt.getClaim("user_name").toString()))
-        .thenMany(this.webClient
-            .get()
-            .uri("http://localhost:8081/api/albums?page={page}&size={size}", page, size)
-            .retrieve()
-            .bodyToFlux(Album.class));
+        .flatMapMany(jwt -> {
+          log.info("username: {}", jwt.getClaim("user_name").toString());
+          return this.webClient
+              .get()
+              .uri("http://localhost:8081/api/albums?page={page}&size={size}", page, size)
+              .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue())
+              .retrieve()
+              .bodyToFlux(Album.class);
+        });
   }
 
   @BatchMapping
