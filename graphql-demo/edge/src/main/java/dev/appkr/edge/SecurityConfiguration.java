@@ -1,6 +1,6 @@
 package dev.appkr.edge;
 
-import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -16,9 +16,9 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @EnableReactiveMethodSecurity
 public class SecurityConfiguration {
 
-  ResourceServerProperties properties;
+  OAuth2ResourceServerProperties properties;
 
-  public SecurityConfiguration(ResourceServerProperties properties) {
+  public SecurityConfiguration(OAuth2ResourceServerProperties properties) {
     this.properties = properties;
   }
 
@@ -40,6 +40,6 @@ public class SecurityConfiguration {
 
   @Bean
   ReactiveJwtDecoder reactiveJwtDecoder() {
-    return new NimbusReactiveJwtDecoder(properties.getJwk().getKeySetUri());
+    return new NimbusReactiveJwtDecoder(properties.getJwt().getJwkSetUri());
   }
 }

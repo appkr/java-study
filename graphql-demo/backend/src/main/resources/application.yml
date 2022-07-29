@@ -4,6 +4,23 @@ server:
 spring:
   application.name: backend
 
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:9999/.well-known/jwks.json
+      client:
+        provider:
+          uaa:
+            token-uri: http://localhost:9999/oauth/token
+            jwk-set-uri: http://localhost:9999/.well-known/jwks.json
+        registration:
+          uaa:
+            client-id: internal
+            client-secret: internal
+            scope: web-app
+            authorization-grant-type: password, client_credentials, refresh_token
+
 management:
   endpoints:
     web.exposure.include: '*'

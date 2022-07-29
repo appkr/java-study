@@ -9,19 +9,34 @@ spring:
     # GET /graphiql
     graphiql.enabled: true
 
-management:
+  cloud:
+    gateway:
+      default-filters:
+        - TokenRelay
+      routes:
+        - id: backend-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/backend/**
+          filters:
+            - RewritePath=/backend/?(?<segment>.*), /$\{segment}
+
   endpoints:
     web.exposure.include: '*'
 
-security:
-  oauth2:
-    client:
-      access-token-uri: http://localhost:9999/oauth/token
-      user-authorization-uri: http://localhost:9999/oauth/token
-      client-id: internal
-      client-secret: internal
-      scope: web-app
-      grant-type: client_credentials
-      authorized-grant-type: password, client_credentials, refresh_token
-    resource:
-      jwk.key-set-uri: http://localhost:9999/.well-known/jwks.json
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:9999/.well-known/jwks.json
+      client:
+        provider:
+          uaa:
+            token-uri: http://localhost:9999/oauth/token
+            jwk-set-uri: http://localhost:9999/.well-known/jwks.json
+        registration:
+          uaa:
+            client-id: internal
+            client-secret: internal
+            scope: web-app
+            authorization-grant-type: password, client_credentials, refresh_token

@@ -81,7 +81,7 @@ handle_success() {
 RESPONSE=$(curl -s -X POST --data "username=user&password=user&grant_type=password&scope=openid" http://web_app:changeit@localhost:9999/oauth/token)
 ACCESS_TOKEN=$(echo $RESPONSE | jq .access_token | xargs)
 
-print_header "Test edge"
+print_header "Test graphql"
 echo "+------+                        +------+           +---------+"
 echo "| curl | -(graphql over http)-> | edge | -(http)-> | backend |"
 echo "+------+                        +------+           +---------+"
@@ -91,5 +91,16 @@ print_request "curl -s -XPOST -H \"Authorization: bearer ACCESS_TOKEN\" -H \"Con
 curl -s -XPOST -H "Content-type: application/graphql+json" -H "Authorization: bearer ${ACCESS_TOKEN}" http://localhost:8080/graphql -d '{
   "query": "{albums {id, title, publishedAt, singer {id, name} songs {id, title, playTime}, price}}"
 }' | jq
+
+print_separator
+
+print_header "Test gateway"
+echo "+------+           +------+           +---------+"
+echo "| curl | -(http)-> | edge | -(http)-> | backend |"
+echo "+------+           +------+           +---------+"
+echo ""
+
+print_request "curl -s -XGET -H \"Authorization: bearer ACCESS_TOKEN\" http://localhost:8080/backend/api/albums?page=1&size=1"
+curl -s -XGET -H "Authorization: bearer ${ACCESS_TOKEN}" "http://localhost:8080/backend/api/albums?page=1&size=1" | jq
 
 print_separator
