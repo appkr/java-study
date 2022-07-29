@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.NoSuchElementException;
@@ -24,10 +25,12 @@ public class BackendApplication {
   }
 
   @GetMapping("/api/albums")
-  public ResponseEntity<Set<Album>> listAlbums() {
+  public ResponseEntity<Set<Album>> listAlbums(@RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
+                                               @RequestParam(name = "size", required = false, defaultValue = "10") Integer size) {
     log.info("log test at backend");
+    final PageRequest pageable = PageRequest.of(page, size);
 
-    return ResponseEntity.ok(repository.findAll());
+    return ResponseEntity.ok(repository.findAll(pageable));
   }
 
   @GetMapping("/api/albums/{albumId}")

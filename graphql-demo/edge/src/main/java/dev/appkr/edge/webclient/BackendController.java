@@ -2,6 +2,7 @@ package dev.appkr.edge.webclient;
 
 import dev.appkr.shared.model.Album;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.BatchMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
@@ -25,14 +26,14 @@ public class BackendController {
   }
 
   @QueryMapping
-  public Flux<Album> albums() {
+  public Flux<Album> albums(@Argument Integer page, @Argument Integer size) {
     return ReactiveSecurityContextHolder.getContext()
         .map(securityContext -> securityContext.getAuthentication().getPrincipal())
         .cast(Jwt.class)
         .doOnNext(jwt -> log.info("username: {}", jwt.getClaim("user_name").toString()))
         .thenMany(this.webClient
             .get()
-            .uri("http://localhost:8081/api/albums")
+            .uri("http://localhost:8081/api/albums?page={page}&size={size}", page, size)
             .retrieve()
             .bodyToFlux(Album.class));
   }

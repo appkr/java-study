@@ -1,6 +1,6 @@
 type Query {
     hello: String
-    albums: [Album]
+    albums(page: Int, size: Int): [Album]
 }
 
 type Album {

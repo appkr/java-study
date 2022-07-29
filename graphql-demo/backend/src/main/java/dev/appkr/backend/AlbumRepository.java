@@ -10,6 +10,7 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class AlbumRepository {
@@ -42,6 +43,14 @@ public class AlbumRepository {
 
   public Set<Album> findAll() {
     return all;
+  }
+
+  public Set<Album> findAll(PageRequest pageable) {
+    final int skip = (pageable.getPage() - 1) * pageable.getSize();
+    return all.stream()
+        .skip(skip)
+        .limit(pageable.getSize())
+        .collect(Collectors.toSet());
   }
 
   public Optional<Album> findById(Long id) {
