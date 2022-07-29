@@ -20,6 +20,10 @@ spring:
             - Path=/backend/**
           filters:
             - RewritePath=/backend/?(?<segment>.*), /$\{segment}
+            - name: CircuitBreaker
+              args:
+                name: downstreamCircuitBreaker
+                fallbackUri: forward:/whenDownstreamFail
 
   endpoints:
     web.exposure.include: '*'
@@ -40,3 +44,25 @@ spring:
             client-secret: internal
             scope: web-app
             authorization-grant-type: password, client_credentials, refresh_token
+
+# @see https://resilience4j.readme.io/docs/circuitbreaker#create-and-configure-a-circuitbreaker
+# @see https://otrodevym.tistory.com/entry/spring-boot-설정하기-24-spring-cloud-Resilience4j1-설정-및-테스트-소스
+# @see io.github.resilience4j.circuitbreaker.CircuitBreakerConfig
+resilience4j:
+  circuitbreaker:
+    configs:
+      downstream:
+        register-health-indicator: true                             # actuator를 통해 circuitbreaker 상태를 노출한다
+#        failure-rate-threshold: 50                                 # default=50, 실패율이 50%를 넘으면 OPEN
+        slow-call-duration-threshold: 3000ms                        # default=60000ms, 느림으로 판단하기 위한 응답 시간 임계값
+# RestTemplate 설정에서 커넥션/리드 타임아웃을 각 5초로 설정하고 있음
+#        slow-call-rate-threshold: 100                              # default=100(%), 느림으로 판단하기 위한 임계값
+#        sliding-window-type: COUNT_BASED                           # default=COUNT_BASED, CLOSED 상태일때 콜 집계 및 평가 방법
+        sliding-window-size: 10                                     # default=100, CLOSED 상태일때 평가할 슬라이딩 윈도우 크기
+        minimum-number-of-calls: 5                                  # default=100, 슬라이딩 윈도우에서 평가를 위한 최소 콜 수 (값이 5라면, 최소 5개의 콜이 쌓여야 평가함; 4개 모두 fail이라도 OPEN 되지 않음에 유의)
+#        permitted-number-of-calls-in-half-open-state: 10           # default=10, HALF-OPEN 상태일때 허용할 프로빙 콜 수
+#        automatic-transition-from-open-to-half-open-enabled: false # default=false, 콜 수와 무관하게 정해진 시간이 지나면 HALF-OPEN 상태로 변경됨
+        wait-duration-in-open-state: 10000ms                        # default=60000ms, OPEN -> HALF-OPEN으로 전환할 때 대기할 시간
+
+      downstreamCircuitBreaker:
+        base-config: downstream
