@@ -4,7 +4,7 @@
 
 ```bash
 # run mysql & jhipster-uaa
-./gradlew clusterUp
+./gradlew composeUp
 
 # generate proto stub
 ./gradlew :proto:generateProto

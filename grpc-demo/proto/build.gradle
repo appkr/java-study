@@ -5,10 +5,6 @@ plugins {
 	id 'com.google.protobuf'
 }
 
-version = '0.0.1-SNAPSHOT'
-group = 'dev.appkr'
-sourceCompatibility = '11'
-
 dependencies {
 	// grpc
 	implementation "io.grpc:grpc-protobuf:${grpcVersion}"

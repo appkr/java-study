@@ -1,34 +1,38 @@
 package dev.appkr.grpcclient;
 
-import static net.devh.boot.grpc.common.security.SecurityConstants.AUTHORIZATION_HEADER;
-import static net.devh.boot.grpc.common.security.SecurityConstants.BEARER_AUTH_PREFIX;
-import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
-
 import io.grpc.CallCredentials;
 import io.grpc.Metadata;
-import java.util.concurrent.Executor;
-import java.util.function.Supplier;
-import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
-import org.springframework.boot.actuate.health.HealthEndpoint;
-import org.springframework.boot.actuate.info.InfoEndpoint;
-import org.springframework.boot.actuate.metrics.MetricsEndpoint;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
-import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.security.web.SecurityFilterChain;
+
+import java.util.concurrent.Executor;
+import java.util.function.Supplier;
+
+import static net.devh.boot.grpc.common.security.SecurityConstants.AUTHORIZATION_HEADER;
+import static net.devh.boot.grpc.common.security.SecurityConstants.BEARER_AUTH_PREFIX;
+import static org.springframework.security.oauth2.jwt.NimbusJwtDecoder.withJwkSetUri;
 
 @Configuration
-@EnableResourceServer
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
-public class SecurityConfiguration  extends ResourceServerConfigurerAdapter {
+public class SecurityConfiguration {
+
+  OAuth2ResourceServerProperties properties;
+
+  public SecurityConfiguration(OAuth2ResourceServerProperties properties) {
+    this.properties = properties;
+  }
 
   @Bean
   CallCredentials bearerAuthForwardingCredentials() {
@@ -51,9 +55,9 @@ public class SecurityConfiguration  extends ResourceServerConfigurerAdapter {
         final Metadata extraHeaders = new Metadata();
 
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication instanceof OAuth2Authentication) {
-          final OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) authentication.getDetails();
-          extraHeaders.put(AUTHORIZATION_HEADER, BEARER_AUTH_PREFIX + details.getTokenValue());
+        if (authentication != null && authentication instanceof JwtAuthenticationToken) {
+          final Jwt jwt = (Jwt) authentication.getPrincipal();
+          extraHeaders.put(AUTHORIZATION_HEADER, BEARER_AUTH_PREFIX + jwt.getTokenValue());
         }
 
         return extraHeaders;
@@ -74,24 +78,24 @@ public class SecurityConfiguration  extends ResourceServerConfigurerAdapter {
     };
   }
 
-  @Override
-  public void configure(HttpSecurity http) throws Exception {
-    // @formatter:off
-    http
-        // To avoid an OPTIONS request always making a 401 response:
-        // @see https://www.baeldung.com/spring-security-cors-preflight
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    return http
         .cors()
-      .and()
-        .csrf().disable()
-        .headers().frameOptions().disable()
-      .and()
-        .sessionManagement().sessionCreationPolicy(STATELESS)
-      .and()
-        .authorizeRequests()
-        .requestMatchers(EndpointRequest.to(HealthEndpoint.class, InfoEndpoint.class, MetricsEndpoint.class)).permitAll()
-      .and()
-        .exceptionHandling()
-    ;
-    // @formatter:on
+        .and()
+        .csrf(spec -> spec.disable())
+        .headers(spec -> spec.frameOptions().disable())
+        .authorizeRequests(spec -> spec
+            .mvcMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+            .antMatchers("/actuator/health/**", "/actuator/info", "/actuator/metrics/**").permitAll()
+            .anyRequest().authenticated()
+        )
+        .oauth2ResourceServer(customizer -> customizer.jwt())
+        .build();
+  }
+
+  @Bean
+  public JwtDecoder jwtDecoder() {
+    return withJwkSetUri(properties.getJwt().getJwkSetUri()).build();
   }
 }

@@ -2,6 +2,23 @@ spring:
   application:
     name: grpcclient
 
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:9999/.well-known/jwks.json
+      client:
+        provider:
+          uaa:
+            token-uri: http://localhost:9999/oauth/token
+            jwk-set-uri: http://localhost:9999/.well-known/jwks.json
+        registration:
+          uaa:
+            client-id: internal
+            client-secret: internal
+            scope: web-app
+            authorization-grant-type: password, client_credentials, refresh_token
+
 grpc:
   client:
     hello-service:
@@ -18,16 +35,3 @@ management:
     info.enabled: true
     health.show-details: always
   info.git.mode: simple
-
-security:
-  oauth2:
-    client:
-      access-token-uri: http://localhost:9999/oauth/token
-      user-authorization-uri: http://localhost:9999/oauth/token
-      client-id: internal
-      client-secret: internal
-      scope: web-app
-      grant-type: client_credentials
-      authorized-grant-type: password, client_credentials, refresh_token
-    resource:
-      jwt.key-uri: http://localhost:9999/oauth/token_key

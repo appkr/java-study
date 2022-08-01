@@ -1,13 +1,30 @@
-spring:
-  application:
-    name: grpcserver
-
 server:
   port: 8081
 
 grpc:
   server:
     port: 8090
+
+spring:
+  application:
+    name: grpcserver
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:9999/.well-known/jwks.json
+      client:
+        provider:
+          uaa:
+            token-uri: http://localhost:9999/oauth/token
+            jwk-set-uri: http://localhost:9999/.well-known/jwks.json
+        registration:
+          uaa:
+            client-id: internal
+            client-secret: internal
+            scope: web-app
+            authorization-grant-type: password, client_credentials, refresh_token
 
 management:
   endpoints:
@@ -19,16 +36,3 @@ management:
     info.enabled: true
     health.show-details: always
   info.git.mode: simple
-
-security:
-  oauth2:
-    client:
-      access-token-uri: http://localhost:9999/oauth/token
-      user-authorization-uri: http://localhost:9999/oauth/token
-      client-id: internal
-      client-secret: internal
-      scope: web-app
-      grant-type: client_credentials
-      authorized-grant-type: password, client_credentials, refresh_token
-    resource:
-      jwk.key-set-uri: http://localhost:9999/.well-known/jwks.json

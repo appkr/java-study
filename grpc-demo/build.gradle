@@ -1,5 +1,11 @@
 buildscript {
 	ext {
+		// Spring version must match with protobuf and grpc
+		// see https://yidongnan.github.io/grpc-spring-boot-starter/en/versions.html
+		springBootVersion = '2.5.8'
+		springDependencyManagementVersion = '1.0.11.RELEASE'
+		springCloudVersion = '2020.0.5'
+		protobufGradlePluginVersion = '0.8.18'
 		protobufVersion = '3.19.2'
 		grpcVersion = '1.42.2'
 		grpcSpringVersion = '2.13.1.RELEASE'
@@ -9,24 +15,24 @@ buildscript {
 plugins {
 	id 'idea'
 	id 'java'
-	id 'org.springframework.boot' version '2.5.8' apply false
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply false
+	id 'com.avast.gradle.docker-compose' version '0.16.8'
+	id 'org.springframework.boot' version "${springBootVersion}" apply false
+	id 'io.spring.dependency-management' version "${springDependencyManagementVersion}" apply false
+	id 'com.google.protobuf' version "${protobufGradlePluginVersion}" apply false
 	id 'io.freefair.lombok' version '6.3.0' apply false
-	id 'com.google.protobuf' version '0.8.18' apply false
 	id 'com.google.cloud.tools.jib' version '3.1.4' apply false
 }
 
 allprojects {
+	version = '0.0.1-SNAPSHOT'
+	group = 'dev.appkr'
+	sourceCompatibility = '11'
+
 	repositories {
 		mavenCentral()
 	}
 }
 
-task clusterDown(type:Exec) {
-	commandLine 'docker-compose', '-f', 'docker/docker-compose.yml', 'down'
-}
-
-task clusterUp(type:Exec) {
-	dependsOn clusterDown
-	commandLine 'docker-compose', '-f', 'docker/docker-compose.yml', 'up'
+dockerCompose {
+	useComposeFiles = ['docker/docker-compose.yml']
 }

@@ -8,12 +8,8 @@ plugins {
 	id 'com.google.cloud.tools.jib'
 }
 
-version = '0.0.1-SNAPSHOT'
-group = 'dev.appkr'
-sourceCompatibility = '11'
-
 dependencies {
-	implementation platform('org.springframework.cloud:spring-cloud-dependencies:2020.0.5')
+	implementation platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
 
 	implementation 'org.springframework.boot:spring-boot-starter'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -32,8 +28,8 @@ dependencies {
 	implementation project(':proto')
 
 	// security
-	implementation 'org.springframework.cloud:spring-cloud-starter-oauth2:2.2.5.RELEASE'
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 
