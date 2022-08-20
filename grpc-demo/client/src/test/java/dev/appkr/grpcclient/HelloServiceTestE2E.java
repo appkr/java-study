@@ -10,11 +10,13 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.TestPropertySource;
 
 @SpringBootTest
 @DirtiesContext
 @Disabled("inProcess 채널에 연결된 서버가 떠 있을 때만 테스트 가능함"
     + "즉, grpc-server-spring-boot-starter 의존을 포함하고 서버 코드를 구현해야 테스트 가능함")
+@TestPropertySource(properties = "spring.security.oauth2.resourceserver.jwt.jwk-set-uri = http://dummy/jwks.json")
 class HelloServiceTestE2E {
 
   @GrpcClient("inProcess")

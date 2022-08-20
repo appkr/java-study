@@ -1,6 +1,8 @@
 // @see https://stackoverflow.com/a/68102211/4737224
 package dev.appkr.grpcserver;
 
+import com.google.protobuf.MessageOrBuilder;
+import com.google.protobuf.TextFormat;
 import io.grpc.ForwardingServerCall.SimpleForwardingServerCall;
 import io.grpc.ForwardingServerCallListener.SimpleForwardingServerCallListener;
 import io.grpc.Metadata;
@@ -19,7 +21,7 @@ public class LogGrpcServerInterceptor implements ServerInterceptor {
     ServerCall<ReqT, RespT> listener = new SimpleForwardingServerCall<>(call) {
       @Override
       public void sendMessage(RespT message) {
-        log.info("gRPC response at server\n{}",  message);
+        log.info("gRPC response at server\n{}", TextFormat.printer().printToString((MessageOrBuilder)message));
         super.sendMessage(message);
       }
     };
@@ -27,7 +29,7 @@ public class LogGrpcServerInterceptor implements ServerInterceptor {
     return new SimpleForwardingServerCallListener<ReqT>(next.startCall(listener, headers)) {
       @Override
       public void onMessage(ReqT message) {
-        log.info("gRPC request at server\n{}", message);
+        log.info("gRPC request at server\n{}", TextFormat.printer().printToString((MessageOrBuilder)message));
         super.onMessage(message);
       }
     };
