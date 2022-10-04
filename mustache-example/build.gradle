@@ -1,0 +1,16 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'application'
+}
+
+group = 'dev.appkr'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.github.spullara.mustache.java:compiler:0.9.10'
+}
