@@ -1,0 +1,24 @@
+plugins {
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
+
+application {
+    mainClass = 'dev.appkr.cpResource.App'
+}
+
+jar {
+    manifest {
+        attributes('Main-Class': 'dev.appkr.cpResource.App')
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
