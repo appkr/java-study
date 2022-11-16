@@ -1,4 +1,4 @@
-package dev.appkr.tcp;
+package dev.appkr.demo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

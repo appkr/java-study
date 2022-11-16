@@ -23,3 +23,7 @@ telnet localhost 9080
 login B
 A::hello?
 ```
+
+```shell
+curl -v http://localhost:8080/hello
+```
