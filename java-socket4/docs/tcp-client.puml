@@ -1,0 +1,70 @@
+@startuml
+
+class java.net.Socket {}
+
+class org.apache.commons.pool2.impl.GenericObjectPool {}
+
+package tcp {
+    interface TcpClient {
+        ' create Socket before writing
+        + write(message: byte[]): void
+        ' dispose Socket after reading
+        + read(): byte[]
+    }
+
+    class DisposableTcpClient implements TcpClient {
+    }
+
+    class PooledTcpClient implements TcpClient {
+        - pool: GenericObjectPool<Socket>
+    }
+
+    DisposableTcpClient ----> java.net.Socket
+    PooledTcpClient ----> java.net.Socket
+    PooledTcpClient -----> org.apache.commons.pool2.impl.GenericObjectPool
+
+    ' Parsing & Formatting: Visitor Pattern
+    interface Parceable <<visitable>> {
+        + accept(parser: Parser): void
+    }
+
+    interface Formattable <<visitable>> {
+        + accept(formatter: Formatter): void
+    }
+
+    interface Parser <<visitor>> {
+        + parse(parseable: Packet): void
+    }
+
+    interface Formatter <<visitor>> {
+        + format(formattable: Packet): void
+    }
+
+    ' Tcp Message: Composite Pattern
+    interface TcpMessage <<component>> {
+        + getName(): String
+        + setName(name: String): void
+        + getPoiner(): int
+        + getValue(): String
+        + setValue(value: String)
+    }
+
+    class Packet <<composite>> implements Parceable, Formattable, TcpMessage {
+        - messageComponents: List<TcpMessage>
+        - tcpMessage: byte[]
+    }
+
+    class Item <<leaf>> implements TcpMessage {}
+
+    interface TcpMessageTemplateFactory {
+        + create(tcpMessage: byte[]): List<TcpMessage>
+    }
+
+    Packet o-down-> TcpMessage
+    Parceable -down-> Parser
+    Formattable -down-> Formatter
+    Parser -down-> Packet
+    Formatter -down-> Packet
+}
+
+@enduml
