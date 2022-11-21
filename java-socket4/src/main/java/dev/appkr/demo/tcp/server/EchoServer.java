@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class TcpServer {
+public class EchoServer {
 
   final int port;
   final ExecutorService executor;
@@ -29,7 +29,7 @@ public class TcpServer {
   final AtomicReference<ServerSocket> serverSocketHolder = new AtomicReference<>();
   final AtomicReference<List<Socket>> socketHolder = new AtomicReference<>(new ArrayList<>());
 
-  public TcpServer(TcpServerProperties properties) {
+  public EchoServer(TcpServerProperties properties) {
     this.port = properties.getPort();
     this.executor = Executors.newFixedThreadPool(properties.getMaxConnection());
   }
