@@ -1,0 +1,17 @@
+@startuml
+
+class TcpServerProperties {
+  - port: int
+  - maxConnection: int
+}
+
+class SettleTcpServer {
+  - port: int
+  - executor: ExecutorService
+  + start(): void
+  + stop(): void
+}
+
+SettleTcpServer -> TcpServerProperties
+
+@enduml
