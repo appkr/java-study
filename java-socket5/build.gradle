@@ -1,19 +1,22 @@
 plugins {
-    id 'application'
+    id 'java'
+    id 'io.freefair.lombok' version '6.3.0'
 }
 
 repositories {
     mavenCentral()
 }
 
+def loggers = [
+        'org.slf4j:slf4j-api:1.7.32',
+        'org.slf4j:log4j-over-slf4j:1.7.32',
+        'ch.qos.logback:logback-core:1.2.9',
+        'ch.qos.logback:logback-classic:1.2.9'
+]
+
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+    implementation loggers
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation 'commons-io:commons-io:2.11.0'
 }
 
-application {
-    mainClass = 'dev.appkr.demo.App'
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
-}
