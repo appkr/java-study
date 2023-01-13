@@ -1,0 +1,14 @@
+plugins {
+    id 'java'
+    id 'idea'
+}
+
+group = 'dev.appkr'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}

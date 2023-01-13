@@ -1,2 +1,3 @@
 rootProject.name = 'boot-starter-example'
-include('lib')
+include('example-lib')
+include('example-spring-boot-autoconfigure')
