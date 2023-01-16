@@ -1,10 +1,7 @@
-version: '3'
-
 services:
 
   mysql:
-    image: mysql:5.7.32
-    platform: linux/amd64
+    image: appkr/mysql:5.7-arm64
     container_name: mysql
     volumes:
       - $HOME/mysql_data:/var/lib/mysql/
@@ -14,10 +11,9 @@ services:
       - MYSQL_ROOT_PASSWORD=secret
     ports:
       - 3306:3306
-    command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
+    command: mysqld --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
     healthcheck:
-      test: mysql -uroot -e 'SELECT 1' || exit 1
-      interval: 60s
+      test: mysql -e 'SELECT 1' 2>/dev/null || mysql -uroot -psecret -e 'SELECT 1' 2>/dev/null || exit 1
 
   # How to start a cluster including "jhipster-uaa"
   #
@@ -27,18 +23,20 @@ services:
   #   o If it fails because of docker hub auth, provide more option to the command
   #     ~/jhipster-uaa $ ... -Djib.from.auth.username={USERNAME} -Djib.from.auth.password={PASSWORD}
   jhipster-uaa:
-    image: jhipster-uaa:latest
+    image: appkr/jhipster-uaa:arm64
     container_name: jhipster-uaa
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/jhipster_uaa?useUnicode=true&characterEncoding=utf8&useSSL=false
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: secret
     ports:
       - 9999:9999
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     healthcheck:
       test: curl -s http://localhost:9999/management/health || exit 1
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/jhipster_uaa?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=secret
 
   grpc-demo-server:
     image: grpc-demo-server:latest
