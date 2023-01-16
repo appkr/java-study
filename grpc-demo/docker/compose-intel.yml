@@ -1,0 +1,39 @@
+services:
+
+  mysql:
+    image: mysql:5.7.32
+    container_name: mysql
+    volumes:
+      - $HOME/mysql_data:/var/lib/mysql/
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_ROOT_PASSWORD=secret
+    ports:
+      - 3306:3306
+    command: mysqld --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
+    healthcheck:
+      test: mysql -e 'SELECT 1' 2>/dev/null || mysql -uroot -psecret -e 'SELECT 1' 2>/dev/null || exit 1
+
+  # How to start a cluster including "jhipster-uaa"
+  #
+  #   o Download and unzip jhipster-uaa from https://github.com/appkr/msa-starter/raw/master/jhipster-uaa.zip
+  #   o Build "jhipster-uaa" docker image
+  #     ~/jhipster-uaa $ ./gradlew clean jibDockerBuild -Djib.to.image=jhipster-uaa -Djib.to.tags=latest
+  #   o If it fails because of docker hub auth, provide more option to the command
+  #     ~/jhipster-uaa $ ... -Djib.from.auth.username={USERNAME} -Djib.from.auth.password={PASSWORD}
+  jhipster-uaa:
+    image: jhipster-uaa:latest
+    container_name: jhipster-uaa
+    ports:
+      - 9999:9999
+    depends_on:
+      mysql:
+        condition: service_healthy
+    healthcheck:
+      test: curl -s http://localhost:9999/management/health || exit 1
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/jhipster_uaa?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=secret
