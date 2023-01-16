@@ -1,0 +1,22 @@
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+sourceCompatibility = '17'
+
+repositories {
+    maven {
+        url "https://nexus.mm.meshkorea.net/repository/maven-public/"
+        credentials {
+            username repoUser
+            password repoPass
+        }
+    }
+    mavenCentral()
+}
+
+dependencies {
+    // Replace with actual dependency "dev.appkr.example-spring-boot-starter:0.0.1-SNAPSHOT"
+    implementation project(':example-spring-boot-starter')
+    implementation 'org.springframework.boot:spring-boot-starter'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
