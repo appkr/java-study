@@ -1,0 +1,4 @@
+dependencies {
+	implementation 'io.micrometer:micrometer-tracing-bridge-brave' // For Tracing Context Propagation with Micrometer Tracing
+	implementation 'io.zipkin.reporter2:zipkin-reporter-brave'     // For Latency Visualization; To produce an Zipkin-compliant span
+}

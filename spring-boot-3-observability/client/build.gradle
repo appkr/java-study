@@ -1,0 +1,4 @@
+dependencies {
+    implementation 'io.micrometer:micrometer-tracing-bridge-otel'   // For Tracing Context Propagation with Micrometer Tracing (otel: OpenTelemetry)
+    implementation 'io.opentelemetry:opentelemetry-exporter-zipkin' // For Latency Visualization; To produce an Zipkin-compliant span
+}
