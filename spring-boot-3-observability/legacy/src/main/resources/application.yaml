@@ -1,0 +1,4 @@
+server.port: 8082
+spring.application.name: legacy
+spring.sleuth.propagation.type: w3c,b3
+spring.sleuth.trace-id128: true
