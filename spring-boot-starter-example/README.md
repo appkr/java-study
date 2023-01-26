@@ -4,6 +4,12 @@
 - Spring Boot Auto Configuration 설정과 원리: http://dveamer.github.io/backend/SpringBootAutoConfiguration.html
 - SPRING BOOT AUTOCONFIGURE 구현해보기: https://seongmun-hong.github.io/springboot/Spring-boot-AutoConfigure
 
+> **`NOTE`** spring-boot 3
+> 
+> Spring Boot 2.7 introduced a new META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports file for registering auto-configurations, while maintaining backwards compatibility with registration in spring.factories. With this release, support for registering auto-configurations in spring.factories has been removed in favor of the imports file.
+> 
+> @see https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.0-Migration-Guide#auto-configuration-files
+
 ### Run
 
 in example-lib:
@@ -89,12 +95,21 @@ public class ExampleAutoConfiguration {
     return () -> "good day";
   }
 }
+
+// NOTE for spring-boot 3
+@AutoConfiguration
+@EnableConfigurationProperties(ExampleProperties.class)
+public class ExampleAutoConfiguration {}
 ```
 
 One thing to note is that, as the reference doc says, `src/main/resources/META-INF/spring.factories` must be provided, so that spring can hook up the `dev.appkr.autoconfigure.ExampleAutoConfiguration` file.
 ```shell
 # example-spring-boot-autoconfigure/src/main/resources/META-INF/spring.factories
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+dev.appkr.autoconfigure.ExampleAutoConfiguration
+
+# NOTE for spring-boot 3
+# example-spring-boot-autoconfigure/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports
 dev.appkr.autoconfigure.ExampleAutoConfiguration
 ```
 
