@@ -1,0 +1,5 @@
+dependencies {
+    annotationProcessor('org.springframework.boot:spring-boot-configuration-processor') {
+        exclude group: 'com.vaadin.external.google', module: 'android-json'
+    }
+}

@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: example
+  profiles:
+    active: local
+  config:
+    import:
+      - optional:shared.yaml
+
+---
+
+spring.config.activate.on-profile: local
+
+application.module: module1@local
