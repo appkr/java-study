@@ -2,6 +2,9 @@ plugins {
     id 'java-library'
 }
 
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
 repositories {
     mavenCentral()
 }
@@ -9,6 +12,8 @@ repositories {
 dependencies {
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
+jar {
+    manifest {
+        attributes 'Main-Class': 'dev.appkr.jniExample.JNIExample'
+    }
 }
