@@ -14,7 +14,7 @@ Reference: https://www.developer.com/open-source/getting-started-with-jni/
 javah -cp $(pwd)/build/classes/java/main -o $(pwd)/src/main/cpp/jniexample.h dev.appkr.jniExample.JNIExample
 ```
 
-4. [Write the C/C++ Program](src/main/cpp/jniexample.h)
+4. [Write the C/C++ Program](src/main/cpp/jniexample.cpp)
 
 5. Create a Shared Library
 ```shell
