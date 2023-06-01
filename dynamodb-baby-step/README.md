@@ -257,3 +257,7 @@ curl http://localhost:8000/ \
   "TableName": "Comment"
 }'
 ```
+
+### Using AWS DynamoDb Java SDK
+
+- [src/test/java/dev/appkr/dynamodb/DynamoSdkTest.java](src/test/java/dev/appkr/dynamodb/DynamoSdkTest.java)
