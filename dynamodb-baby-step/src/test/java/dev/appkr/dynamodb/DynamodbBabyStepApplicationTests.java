@@ -9,5 +9,4 @@ class DynamodbBabyStepApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }
