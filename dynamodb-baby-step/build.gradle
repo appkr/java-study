@@ -17,6 +17,7 @@ dependencies {
 	implementation platform('software.amazon.awssdk:bom:2.20.75')
 	implementation 'software.amazon.awssdk:sts'
 	implementation 'software.amazon.awssdk:dynamodb'
+	implementation 'com.github.derjust:spring-data-dynamodb:5.1.0'
 
 	implementation 'org.springframework.boot:spring-boot-starter'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

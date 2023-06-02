@@ -261,3 +261,12 @@ curl http://localhost:8000/ \
 ### Using AWS DynamoDb Java SDK
 
 - [src/test/java/dev/appkr/dynamodb/DynamoSdkTest.java](src/test/java/dev/appkr/dynamodb/DynamoSdkTest.java)
+
+### Using spring-data-dynamodb
+
+Note that the library uses old version of AWS SDK, which is different from the library that we used above.
+
+- [src/main/java/dev/appkr/dynamodb/DynamoJpaConfiguration.java](src/main/java/dev/appkr/dynamodb/DynamoJpaConfiguration.java)
+- [src/main/java/dev/appkr/dynamodb/Comment.java](src/main/java/dev/appkr/dynamodb/Comment.java)
+- [src/main/java/dev/appkr/dynamodb/CommentJpaRepository.java](src/main/java/dev/appkr/dynamodb/CommentRepository.java)
+- [src/test/java/dev/appkr/dynamodb/DynamoJpaTest.java](src/test/java/dev/appkr/dynamodb/DynamoJpaTest.java)
