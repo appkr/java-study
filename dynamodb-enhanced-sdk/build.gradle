@@ -1,0 +1,27 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.1.0'
+	id 'io.spring.dependency-management' version '1.1.0'
+	id 'io.freefair.lombok' version '8.0.1'
+}
+
+group = 'dev.appkr'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation platform('software.amazon.awssdk:bom:2.20.76')
+	implementation 'software.amazon.awssdk:sts'
+	implementation 'software.amazon.awssdk:dynamodb-enhanced'
+
+	implementation 'org.springframework.boot:spring-boot-starter'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
