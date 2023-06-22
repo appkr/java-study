@@ -1,4 +1,4 @@
-package dev.appkr.dynamodb;
+package dev.appkr.dynamodb.model;
 
 import static software.amazon.awssdk.enhanced.dynamodb.mapper.StaticAttributeTags.primaryPartitionKey;
 

@@ -1,5 +1,6 @@
-package dev.appkr.dynamodb;
+package dev.appkr.dynamodb.enhanced;
 
+import dev.appkr.dynamodb.model.Customer;
 import java.util.concurrent.CompletableFuture;
 import org.springframework.stereotype.Component;
 import software.amazon.awssdk.core.async.SdkPublisher;

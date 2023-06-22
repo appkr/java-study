@@ -1,5 +1,6 @@
-package dev.appkr.dynamodb;
+package dev.appkr.dynamodb.enhanced;
 
+import dev.appkr.dynamodb.model.Customer;
 import java.time.Instant;
 import java.util.concurrent.CompletableFuture;
 import lombok.extern.slf4j.Slf4j;
