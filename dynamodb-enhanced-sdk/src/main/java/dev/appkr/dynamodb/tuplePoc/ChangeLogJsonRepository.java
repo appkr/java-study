@@ -1,41 +1,41 @@
-package dev.appkr.dynamodb.keyvaluePoc;
+package dev.appkr.dynamodb.tuplePoc;
 
 import static software.amazon.awssdk.services.dynamodb.model.AttributeValue.fromS;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.appkr.dynamodb.model.User;
+import dev.appkr.dynamodb.model.ChangeLog;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 import software.amazon.awssdk.services.dynamodb.DynamoDbAsyncClient;
-import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
-import software.amazon.awssdk.services.dynamodb.model.KeyType;
-import software.amazon.awssdk.services.dynamodb.model.ScalarAttributeType;
+import software.amazon.awssdk.services.dynamodb.model.*;
 
-@Component
+@Repository
 @Slf4j
-public class UserJsonRepository {
+public class ChangeLogJsonRepository {
 
-  static final String TABLE_NAME = "User";
+  static final String TABLE_NAME = "ChangeLog";
 
   final DynamoDbAsyncClient client;
   final ObjectMapper mapper;
 
-  public UserJsonRepository(DynamoDbAsyncClient client, ObjectMapper mapper) {
+  public ChangeLogJsonRepository(DynamoDbAsyncClient client, ObjectMapper mapper) {
     this.client = client;
     this.mapper = mapper;
   }
 
-  public Mono<User> save(User entity) {
+  public Mono<ChangeLog> save(ChangeLog entity) {
     final Map<String, AttributeValue> item = Map.of(
-        "id", fromS(entity.getId()),
+        "key", fromS(entity.getKey()),
+        "type", fromS(entity.getType()),
         "value", fromS(serialize(entity))
     );
-    final CompletableFuture<User> future = this.client
+
+    final CompletableFuture<ChangeLog> future = this.client
         .putItem(builder -> builder
             .tableName(TABLE_NAME)
             .item(item)
@@ -51,11 +51,16 @@ public class UserJsonRepository {
     return Mono.fromFuture(future);
   }
 
-  public Mono<List<User>> findAll() {
-    final CompletableFuture<List<User>> future = this.client
+  public Mono<List<ChangeLog>> findAllByType(String type) {
+    final CompletableFuture<List<ChangeLog>> future = this.client
         .scan(builder -> builder
             .tableName(TABLE_NAME)
-            .build())
+            .indexName("type")
+            .filterExpression("#type = :typeValue")
+            .expressionAttributeNames(Map.of("#type", "type"))
+            .expressionAttributeValues(Map.of(":typeValue", AttributeValue.fromS(type)))
+            .build()
+        )
         .thenApply(r -> r.items().stream()
             .map(item -> deserialize(item.get("value").s()))
             .toList()
@@ -64,28 +69,11 @@ public class UserJsonRepository {
     return Mono.fromFuture(future);
   }
 
-  public Mono<User> findById(String id) {
-    final CompletableFuture<User> future = this.client
-        .getItem(builder -> builder
-            .tableName(TABLE_NAME)
-            .key(Map.of("id", fromS(id)))
-            .build())
-        .handle((r, t) -> {
-          if (t == null && r.hasItem()) {
-            return deserialize(r.item().get("value").s());
-          }
-          log.error("조회 실패", t);
-          return null;
-        });
-
-    return Mono.fromFuture(future);
-  }
-
-  public Mono<User> delete(User entity) {
-    final CompletableFuture<User> future = this.client
+  public Mono<ChangeLog> delete(ChangeLog entity) {
+    final CompletableFuture<ChangeLog> future = this.client
         .deleteItem(builder -> builder
             .tableName(TABLE_NAME)
-            .key(Map.of("id", fromS(entity.getId())))
+            .key(Map.of("key", fromS(entity.getId())))
             .build())
         .handle((r, t) -> {
           if (t == null) {
@@ -106,12 +94,21 @@ public class UserJsonRepository {
         .handle((r, t) -> {
           if (t != null) {
             this.client.createTable(builder -> builder
-                .tableName(TABLE_NAME)
-                .keySchema(b -> b.attributeName("id").keyType(KeyType.HASH))
-                .attributeDefinitions(
-                    b -> b.attributeName("id").attributeType(ScalarAttributeType.S).build(),
-                    b -> b.attributeName("value").attributeType(ScalarAttributeType.S).build()
-                ).build());
+                    .tableName(TABLE_NAME)
+                    .attributeDefinitions(
+                        b -> b.attributeName("key").attributeType(ScalarAttributeType.S),
+                        b -> b.attributeName("type").attributeType(ScalarAttributeType.S)
+                    )
+                    .keySchema(b -> b.attributeName("key").keyType(KeyType.HASH))
+                    .globalSecondaryIndexes(b -> b
+                        .indexName("type")
+                        .keySchema(kb -> kb.attributeName("type").keyType(KeyType.HASH))
+                        .provisionedThroughput(pb -> pb.readCapacityUnits(1L).writeCapacityUnits(1L))
+                        .projection(pb -> pb.projectionType(ProjectionType.ALL))
+                    )
+                    .provisionedThroughput(b -> b.readCapacityUnits(1L).writeCapacityUnits(1L))
+                )
+                .join();
           }
 
           return null;
@@ -135,7 +132,7 @@ public class UserJsonRepository {
     return Mono.fromFuture(future);
   }
 
-  public String serialize(User source) {
+  public String serialize(ChangeLog source) {
     String serialized = "";
     try {
       serialized = mapper.writeValueAsString(source);
@@ -146,10 +143,10 @@ public class UserJsonRepository {
     return serialized;
   }
 
-  public User deserialize(String source) {
-    User deserialized = null;
+  public ChangeLog deserialize(String source) {
+    ChangeLog deserialized = null;
     try {
-      deserialized = mapper.readValue(source, User.class);
+      deserialized = mapper.readValue(source, ChangeLog.class);
     } catch (JsonProcessingException e) {
       log.warn("역직렬화 실패", e);
     }

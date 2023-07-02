@@ -17,7 +17,6 @@ public class UserRepository {
 
   public UserRepository(DynamoDbEnhancedAsyncClient client) {
     this.table = client.table("User", TableSchema.fromBean(User.class));
-    createTableIfNotExists().block();
   }
 
   public Mono<User> save(User item) {

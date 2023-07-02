@@ -15,7 +15,6 @@ public class CustomerRepository {
 
   public CustomerRepository(DynamoDbEnhancedAsyncClient client) {
     this.table = client.table("Customer", Customer.getSchema());
-    createTableIfNotExists().join();
   }
 
   public CompletableFuture<Customer> save(Customer item) {
