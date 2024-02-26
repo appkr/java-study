@@ -3,6 +3,7 @@ package dev.appkr.coroutines
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
@@ -11,78 +12,80 @@ import org.junit.jupiter.api.Test
 import java.util.concurrent.ConcurrentLinkedQueue
 import kotlin.system.measureTimeMillis
 
-class ForkJoinCoroutines {
+class ForkJoinCoroutines_IO {
+    val dispatcher = Dispatchers.IO
+
     @Test
     fun withoutCoroutine() {
         val elapsedMillis = measureTimeMillis {
-            val unorderedResults = buildList<Int> {
-                for (i in 0..1000) {
-                    println(i)
-                    if (i % 2 == 0) add(i)
+            val unorderedResults = buildList {
+                (0..1000).forEach {
+                    Thread.sleep(10)
+                    if (it % 2 == 0) add(it)
                 }
             }
 
-            println(unorderedResults)
+            println(unorderedResults.size)
         }
 
-        println("elapsedMillis=$elapsedMillis") // 32ms, 10ms, 11ms, 11ms, 11ms
+        println("elapsedMillis=$elapsedMillis")
     }
 
     @Test
     fun usingLaunchAndConcurrentLinkedQueue() {
-        val elapsedMilles = measureTimeMillis {
+        val elapsedMillis = measureTimeMillis {
             val unorderedResults = ConcurrentLinkedQueue<Int>()
-            runBlocking {
-                for (i in 0..1000) {
+            runBlocking(dispatcher) {
+                (0..1000).forEach {
                     launch {
-                        println(i)
-                        if (i % 2 == 0) unorderedResults.add(i * i)
+                        delay(10)
+                        if (it % 2 == 0) unorderedResults.add(it * it)
                     }
                 }
             }
 
-            println(unorderedResults)
+            println(unorderedResults.size)
         }
 
-        println("elapsedMillis=$elapsedMilles") // 66ms, 64ms, 61ms, 63ms, 65ms
+        println("elapsedMillis=$elapsedMillis")
     }
 
     @Test
     fun usingAsync() {
         val elapsedMillis = measureTimeMillis {
-            val unorderedResults = runBlocking {
+            val unorderedResults = runBlocking(dispatcher) {
                 (0..1000).map { i ->
                     async {
-                        println(i)
+                        delay(10)
                         if (i % 2 == 0) i * i else null
                     }
                 }.awaitAll().filterNotNull()
             }
 
-            println(unorderedResults)
+            println(unorderedResults.size)
         }
 
-        println("elapsedMillis=$elapsedMillis") // 68ms, 16ms, 16ms, 14ms, 14ms
+        println("elapsedMillis=$elapsedMillis")
     }
 
     @Test
     fun usingChannelFlow() {
         val elapsedMillis = measureTimeMillis {
-            val unorderedResults = runBlocking(Dispatchers.Default) {
+            val unorderedResults = runBlocking(dispatcher) {
                 channelFlow {
-                    for (i in 0..1000) {
+                    (0..1000).forEach {
                         launch {
-                            println(i)
-                            if (i % 2 == 0) send(i)
+                            delay(10)
+                            if (it % 2 == 0) send(it)
                         }
                     }
                 }.toList()
             }
 
-            println(unorderedResults)
+            println(unorderedResults.size)
         }
 
-        println("elapsedMillis=$elapsedMillis") // 76ms, 36ms, 37ms, 36ms, 31ms
+        println("elapsedMillis=$elapsedMillis")
     }
 
     fun <T> println(msg: T) {
