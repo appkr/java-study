@@ -26,6 +26,8 @@ dependencies {
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
 	implementation("org.apache.commons:commons-jexl3:3.4.0")
+	implementation(kotlin("script-runtime"))
+	implementation("org.jetbrains.kotlin:kotlin-scripting-jsr223")
 }
 
 kotlin {
