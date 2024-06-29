@@ -1,5 +1,7 @@
 package dev.appkr.elExercise
 
+import kotlin.math.pow
+
 fun main() {
     // (5 + 3) * (2 - 1)
     val expression = MultiplyExpression(
@@ -8,42 +10,4 @@ fun main() {
     )
 
     println("(5 + 3) * (2 - 1): ${expression.interpret()}")
-}
-
-interface Expression {
-    fun interpret(): Double
-}
-
-class NumberExpression(
-    private val number: Double,
-) : Expression {
-    override fun interpret(): Double = number
-}
-
-class AddExpression(
-    private val left: Expression,
-    private val right: Expression,
-) : Expression {
-    override fun interpret(): Double = left.interpret() + right.interpret()
-}
-
-class SubtractExpression(
-    private val left: Expression,
-    private val right: Expression,
-) : Expression {
-    override fun interpret(): Double = left.interpret() - right.interpret()
-}
-
-class MultiplyExpression(
-    private val left: Expression,
-    private val right: Expression,
-) : Expression {
-    override fun interpret(): Double = left.interpret() * right.interpret()
-}
-
-class DivideExpression(
-    private val left: Expression,
-    private val right: Expression,
-) : Expression {
-    override fun interpret(): Double = left.interpret() / right.interpret()
 }
