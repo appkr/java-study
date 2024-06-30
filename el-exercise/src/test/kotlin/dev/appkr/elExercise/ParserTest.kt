@@ -1,69 +1,87 @@
 package dev.appkr.elExercise
 
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class ParserTest {
     @Test
     fun testSimpleAddition() {
-        val parser = Parser("3 + 4")
-        val result = parser.parse().interpret()
-        assertEquals(7.0, result)
+        val expression = "3 + 4" // 외부에서 주어진 수식을 시뮬레이션한다
+
+        val evaluatedExpression = Parser(expression).parse()
+
+        assertThat(evaluatedExpression.interpret()).isEqualTo(7.0)
     }
 
     @Test
     fun testSimpleSubtraction() {
-        val parser = Parser("10 - 3")
-        val result = parser.parse().interpret()
-        assertEquals(7.0, result)
+        val expression = "10 - 3" // 외부에서 주어진 수식을 시뮬레이션한다
+
+        val evaluatedExpression = Parser(expression).parse()
+
+        assertThat(evaluatedExpression.interpret()).isEqualTo(7.0)
     }
 
     @Test
     fun testSimpleMultiplication() {
-        val parser = Parser("2 * 5")
-        val result = parser.parse().interpret()
-        assertEquals(10.0, result)
+        val expression = "2 * 5" // 외부에서 주어진 수식을 시뮬레이션한다
+
+        val evaluatedExpression = Parser(expression).parse()
+
+        assertThat(evaluatedExpression.interpret()).isEqualTo(10.0)
     }
 
     @Test
     fun testSimpleDivision() {
-        val parser = Parser("15 / 3")
-        val result = parser.parse().interpret()
-        assertEquals(5.0, result)
+        val expression = "15 / 3" // 외부에서 주어진 수식을 시뮬레이션한다
+
+        val evaluatedExpression = Parser(expression).parse()
+
+        assertThat(evaluatedExpression.interpret()).isEqualTo(5.0)
     }
 
     @Test
     fun testPowerOperation() {
-        val parser = Parser("2 ^ 3")
-        val result = parser.parse().interpret()
-        assertEquals(8.0, result)
+        val expression = "2 ^ 3" // 외부에서 주어진 수식을 시뮬레이션한다
+
+        val evaluatedExpression = Parser(expression).parse()
+
+        assertThat(evaluatedExpression.interpret()).isEqualTo(8.0)
     }
 
     @Test
     fun testComplexExpression() {
-        val parser = Parser("3 + 4 * 2 / ( 1 - 5 ) ^ 2")
-        val result = parser.parse().interpret()
-        assertEquals(3.5, result, 1e-10)
+        val expression = "3 + 4 * 2 / ( 1 - 5 ) ^ 2" // 외부에서 주어진 수식을 시뮬레이션한다
+
+        val evaluatedExpression = Parser(expression).parse()
+
+        assertThat(evaluatedExpression.interpret()).isEqualTo(3.5)
     }
 
     @Test
     fun testNestedParentheses() {
-        val parser = Parser("(3 + 4) * (2 + 2)")
-        val result = parser.parse().interpret()
-        assertEquals(28.0, result)
+        val expression = "(3 + 4) * (2 + 2)" // 외부에서 주어진 수식을 시뮬레이션한다
+
+        val evaluatedExpression = Parser(expression).parse()
+
+        assertThat(evaluatedExpression.interpret()).isEqualTo(28.0)
     }
 
     @Test
     fun testMultipleOperations() {
-        val parser = Parser("2 * 3 + 4 / 2")
-        val result = parser.parse().interpret()
-        assertEquals(8.0, result)
+        val expression = "2 * 3 + 4 / 2" // 외부에서 주어진 수식을 시뮬레이션한다
+
+        val evaluatedExpression = Parser(expression).parse()
+
+        assertThat(evaluatedExpression.interpret()).isEqualTo(8.0)
     }
 
     @Test
     fun testComplexNestedExpression() {
-        val parser = Parser("2 * (3 + 4) / (2 ^ 2)")
-        val result = parser.parse().interpret()
-        assertEquals(3.5, result)
+        val expression = "2 * (3 + 4) / (2 ^ 2)" // 외부에서 주어진 수식을 시뮬레이션한다
+
+        val evaluatedExpression = Parser(expression).parse()
+
+        assertThat(evaluatedExpression.interpret()).isEqualTo(3.5)
     }
 }

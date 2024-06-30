@@ -1,7 +1,5 @@
 package dev.appkr.elExercise
 
-import kotlin.math.pow
-
 fun main() {
     // (5 + 3) * (2 - 1)
     val expression = MultiplyExpression(
